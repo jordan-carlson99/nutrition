@@ -30,31 +30,37 @@ VALUES
   ('user3', 'password3', 40, 120, 50, 1400);
 
 -- Create 3 meal plans
-INSERT INTO meal_plan (account_id, total_carbs, total_protein, total_fat, total_calories)
+INSERT INTO meal_plan (account_id)
 VALUES 
-  (1, 150, 200, 100, 2500),
-  (2, 120, 150, 80, 2000),
-  (3, 100, 180, 70, 1800);
+  (1),
+  (2),
+  (3);
 
 INSERT INTO meal (name, meal_carbs, meal_protein, meal_fat, meal_calories)
 VALUES 
-  ('Meal 1', 30, 40, 20, 500),
-  ('Meal 2', 40, 50, 30, 700),
-  ('Meal 3', 25, 30, 15, 400),
-  ('Meal 4', 35, 45, 25, 600),
-  ('Meal 5', 20, 25, 10, 300),
-  ('Meal 6', 30, 35, 20, 500),
-  ('Meal 7', 40, 30, 25, 600),
-  ('Meal 8', 25, 20, 10, 350);
+  ('Meal 1', 0, 0, 0, 0),
+  ('Meal 2', 0, 0, 0, 0),
+  ('Meal 3', 0, 0, 0, 0);
 
 -- Create 3 meal schedules
 INSERT INTO meal_schedule (meal_plan_id, meal_id, meal_number, meal_day)
 VALUES 
   (1, 1, 1, 1),
   (1, 2, 2, 1),
-  (1, 3, 3, 1),
-  (2, 4, 1, 1),
-  (2, 5, 2, 1),
-  (2, 6, 3, 1),
-  (3, 7, 1, 1),
-  (3, 8, 2, 1);
+  (1, 3, 3, 1);
+
+-- Seed meal_item table
+INSERT INTO meal_item (meal_id, ingredient_id, quantity)
+VALUES
+  -- Meal 1 items
+  (1, 1, 2),
+  (1, 2, 1),
+  (1, 3, 0.5),
+  -- Meal 2 items
+  (2, 2, 1.5),
+  (2, 4, 1),
+  (2, 5, 1),
+  -- Meal 3 items
+  (3, 3, 2),
+  (3, 6, 1),
+  (3, 7, 0.5);

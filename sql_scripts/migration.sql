@@ -17,20 +17,20 @@ CREATE TABLE account (
 
 CREATE TABLE meal_plan (
   id SERIAL PRIMARY KEY,
-  account_id INTEGER REFERENCES account(id) NOT NULL,
-  total_carbs FLOAT NOT NULL,
-  total_protein FLOAT NOT NULL,
-  total_fat FLOAT NOT NULL,
-  total_calories FLOAT NOT NULL
+  account_id INTEGER REFERENCES account(id) NOT NULL
+  -- total_carbs FLOAT NOT NULL,
+  -- total_protein FLOAT NOT NULL,
+  -- total_fat FLOAT NOT NULL,
+  -- total_calories FLOAT NOT NULL
 );
 
 CREATE TABLE meal (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  meal_carbs FLOAT NOT NULL,
-  meal_protein FLOAT NOT NULL,
-  meal_fat FLOAT NOT NULL,
-  meal_calories FLOAT NOT NULL
+  meal_carbs FLOAT,
+  meal_protein FLOAT,
+  meal_fat FLOAT,
+  meal_calories FLOAT
 );
 
 CREATE TABLE ingredient (
@@ -46,11 +46,7 @@ CREATE TABLE ingredient (
 CREATE TABLE meal_item (
   meal_id INTEGER REFERENCES meal(id) NOT NULL,
   ingredient_id INTEGER REFERENCES ingredient(id) NOT NULL,
-  quantity FLOAT NOT NULL,
-  meal_item_carbs FLOAT NOT NULL,
-  meal_item_protein FLOAT NOT NULL,
-  meal_item_fat FLOAT NOT NULL,
-  meal_item_calories FLOAT NOT NULL
+  quantity FLOAT NOT NULL
 );
 
 CREATE TABLE meal_schedule (
@@ -59,3 +55,83 @@ CREATE TABLE meal_schedule (
   meal_number INTEGER NOT NULL,
   meal_day INTEGER NOT NULL
 );
+
+CREATE OR REPLACE FUNCTION update_meal_carbs()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE meal SET
+    meal_carbs = (
+      SELECT SUM(ingredient_carbs * quantity)
+      FROM meal_item
+      JOIN ingredient ON meal_item.ingredient_id = ingredient.id
+      WHERE meal_id = NEW.meal_id
+    )
+  WHERE id = NEW.meal_id;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_meal_carbs_trigger
+AFTER INSERT OR UPDATE OR DELETE ON meal_item
+FOR EACH ROW
+EXECUTE FUNCTION update_meal_carbs();
+
+CREATE OR REPLACE FUNCTION update_meal_protein()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE meal SET
+    meal_protein = (
+      SELECT SUM(ingredient_protein * quantity)
+      FROM meal_item
+      JOIN ingredient ON meal_item.ingredient_id = ingredient.id
+      WHERE meal_id = NEW.meal_id
+    )
+  WHERE id = NEW.meal_id;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_meal_protein_trigger
+AFTER INSERT OR UPDATE OR DELETE ON meal_item
+FOR EACH ROW
+EXECUTE FUNCTION update_meal_protein();
+
+CREATE OR REPLACE FUNCTION update_meal_fat()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE meal SET
+    meal_fat = (
+      SELECT SUM(ingredient_fat * quantity)
+      FROM meal_item
+      JOIN ingredient ON meal_item.ingredient_id = ingredient.id
+      WHERE meal_id = NEW.meal_id
+    )
+  WHERE id = NEW.meal_id;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_meal_fat_trigger
+AFTER INSERT OR UPDATE OR DELETE ON meal_item
+FOR EACH ROW
+EXECUTE FUNCTION update_meal_fat();
+
+CREATE OR REPLACE FUNCTION update_meal_calories()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE meal SET
+    meal_calories = (
+      SELECT SUM(ingredient_calories * quantity)
+      FROM meal_item
+      JOIN ingredient ON meal_item.ingredient_id = ingredient.id
+      WHERE meal_id = NEW.meal_id
+    )
+  WHERE id = NEW.meal_id;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_meal_calories_trigger
+AFTER INSERT OR UPDATE OR DELETE ON meal_item
+FOR EACH ROW
+EXECUTE FUNCTION update_meal_calories();
