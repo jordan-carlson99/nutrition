@@ -38,7 +38,8 @@ CREATE TABLE ingredient (
   ingredient_carbs FLOAT NOT NULL,
   ingredient_protein FLOAT NOT NULL,
   ingredient_fat FLOAT NOT NULL,
-  ingredient_calories FLOAT NOT NULL
+  ingredient_calories FLOAT NOT NULL,
+  name varchar(255) NOT NULL
 );
 
 
