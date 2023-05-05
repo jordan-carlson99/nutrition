@@ -29,13 +29,6 @@ VALUES
   ('user2', 'password2', 60, 80, 70, 1800),
   ('user3', 'password3', 40, 120, 50, 1400);
 
--- Create 3 meal plans
-INSERT INTO meal_plan (account_id)
-VALUES 
-  (1),
-  (2),
-  (3);
-
 INSERT INTO meal (name, meal_carbs, meal_protein, meal_fat, meal_calories)
 VALUES 
   ('Meal 1', 0, 0, 0, 0),
@@ -43,7 +36,7 @@ VALUES
   ('Meal 3', 0, 0, 0, 0);
 
 -- Create 3 meal schedules
-INSERT INTO meal_schedule (meal_plan_id, meal_id, meal_number, meal_day)
+INSERT INTO meal_schedule (account_id, meal_id, meal_number, meal_day)
 VALUES 
   (1, 1, 1, 1),
   (1, 2, 2, 1),

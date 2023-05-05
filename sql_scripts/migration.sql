@@ -15,14 +15,14 @@ CREATE TABLE account (
   cal_goal FLOAT NOT NULL
 );
 
-CREATE TABLE meal_plan (
-  id SERIAL PRIMARY KEY,
-  account_id INTEGER REFERENCES account(id) NOT NULL
-  -- total_carbs FLOAT NOT NULL,
-  -- total_protein FLOAT NOT NULL,
-  -- total_fat FLOAT NOT NULL,
-  -- total_calories FLOAT NOT NULL
-);
+-- CREATE TABLE meal_plan (
+--   id SERIAL PRIMARY KEY,
+--   account_id INTEGER REFERENCES account(id) NOT NULL
+--   -- total_carbs FLOAT NOT NULL,
+--   -- total_protein FLOAT NOT NULL,
+--   -- total_fat FLOAT NOT NULL,
+--   -- total_calories FLOAT NOT NULL
+-- );
 
 CREATE TABLE meal (
   id SERIAL PRIMARY KEY,
@@ -50,7 +50,7 @@ CREATE TABLE meal_item (
 );
 
 CREATE TABLE meal_schedule (
-  meal_plan_id INTEGER REFERENCES meal_plan(id) NOT NULL,
+  account_id INTEGER REFERENCES account(id) NOT NULL,
   meal_id INTEGER REFERENCES meal(id) NOT NULL,
   meal_number INTEGER NOT NULL,
   meal_day INTEGER NOT NULL

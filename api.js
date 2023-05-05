@@ -40,13 +40,12 @@ app.get("/all/:accountname", (req, res) => {
   client
     .query(
       `SELECT account.accountname, account.carb_goal, account.protein_goal, account.fat_goal, account.cal_goal,
-  meal_schedule.meal_number, meal_schedule.meal_day,
-  meal.*
-  FROM account
-  JOIN meal_plan ON account.id=meal_plan.account_id
-  JOIN meal_schedule ON meal_plan.id=meal_schedule.meal_plan_id
-  JOIN meal ON meal.id=meal_schedule.meal_id
-  WHERE account.accountname=$1;`,
+      meal_schedule.meal_number, meal_schedule.meal_day,
+      meal.*
+      FROM account
+      JOIN meal_schedule ON meal_schedule.account_id=account.id
+      JOIN meal ON meal.id=meal_schedule.meal_id
+      WHERE account.accountname=$1;`,
       [req.params.accountname]
     )
     .then((result) => {
@@ -54,23 +53,29 @@ app.get("/all/:accountname", (req, res) => {
     });
 });
 
-// get meals associated to accounts meal schedule
+// get meals associated to accounts via meal_schedule
 app.get("/meals/:accountname", (req, res) => {
   client
     .query(
       `SELECT account.accountname,
-  meal_schedule.meal_day, meal_schedule.meal_number,
-  meal.name,meal.meal_carbs, meal.meal_protein, meal.meal_fat, meal.meal_calories
-  FROM account
-  JOIN meal_plan ON account.id=meal_plan.account_id
-  JOIN meal_schedule ON meal_schedule.meal_plan_id=meal_plan.id
-  JOIN meal ON meal.id=meal_schedule.meal_id
-  WHERE account.accountname=$1;`,
+      meal_schedule.meal_day,
+      meal.name,meal.meal_carbs, meal.meal_protein, meal.meal_fat, meal.meal_calories
+      FROM account
+      JOIN meal_schedule ON meal_schedule.account_id=account.id
+      JOIN meal ON meal.id=meal_schedule.meal_id
+      WHERE account.accountname=$1;`,
       [req.params.accountname]
     )
     .then((result) => {
       res.send(result.rows);
     });
+});
+
+// get all meals
+app.get("/meals", (req, res) => {
+  client.query(`SELECT * FROM meal;`).then((result) => {
+    res.send(result.rows);
+  });
 });
 
 // get user's goals
