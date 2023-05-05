@@ -91,7 +91,7 @@ app.get("/goals/:accountname", (req, res) => {
 });
 
 // put a new meal
-app.put("/meals/", (req, res, next) => {
+app.put("/meals/", (req, res) => {
   /* validate data
   body :
   {
@@ -116,16 +116,8 @@ app.put("/meals/", (req, res, next) => {
         req.body.cals,
       ]
     )
-    .then((result) => {
-      next(result);
-      res.send("success");
-    });
+    .then(res.send("success"));
   // update meal_schedule
-});
-
-app.use((req, res) => {
-  console.log(req.params.accountname);
-  console.log("good");
 });
 
 // put a new ingredient
