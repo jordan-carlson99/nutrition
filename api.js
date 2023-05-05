@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
   res.send("success");
 });
 
+// get user info
 app.get("/user/:accountname", (req, res) => {
   client
     .query(`SELECT * FROM account WHERE accountname=$1`, [
@@ -35,7 +36,88 @@ app.get("/user/:accountname", (req, res) => {
 });
 
 // get all data for account
-app.get("/all/:accountname", (req, res) => {});
+app.get("/all/:accountname", (req, res) => {
+  client
+    .query(
+      `SELECT account.accountname, account.carb_goal, account.protein_goal, account.fat_goal, account.cal_goal,
+  meal_schedule.meal_number, meal_schedule.meal_day,
+  meal.*
+  FROM account
+  JOIN meal_plan ON account.id=meal_plan.account_id
+  JOIN meal_schedule ON meal_plan.id=meal_schedule.meal_plan_id
+  JOIN meal ON meal.id=meal_schedule.meal_id
+  WHERE account.accountname=$1;`,
+      [req.params.accountname]
+    )
+    .then((result) => {
+      res.send(result.rows);
+    });
+});
+
+// get meals associated to accounts meal schedule
+app.get("/meals/:accountname", (req, res) => {
+  client
+    .query(
+      `SELECT account.accountname,
+  meal_schedule.meal_day, meal_schedule.meal_number,
+  meal.name,meal.meal_carbs, meal.meal_protein, meal.meal_fat, meal.meal_calories
+  FROM account
+  JOIN meal_plan ON account.id=meal_plan.account_id
+  JOIN meal_schedule ON meal_schedule.meal_plan_id=meal_plan.id
+  JOIN meal ON meal.id=meal_schedule.meal_id
+  WHERE account.accountname=$1;`,
+      [req.params.accountname]
+    )
+    .then((result) => {
+      res.send(result.rows);
+    });
+});
+
+// get user's goals
+app.get("/goals/:accountname", (req, res) => {
+  client
+    .query(
+      `SELECT carb_goal, protein_goal, fat_goal, cal_goal FROM account WHERE accountname=$1;`,
+      [req.params.accountname]
+    )
+    .then((result) => {
+      res.send(result.rows);
+    });
+});
+
+// put a new meal
+app.put("/meals/:accountname", (req, res) => {
+  /* validate data
+  body :
+  {
+    "name": "name",
+    "carbs": 14,
+    "protein": 16,
+    "fat": 1,
+    "cals": 150
+  } 
+   */
+
+  for (let elem in req.body) {
+    if (elem != "name" && typeof req.body[elem] != "number") {
+      req.body[elem] = parseFloat(req.body[elem]);
+    }
+  }
+  client
+    .query(
+      `INSERT INTO meal (name, meal_carbs, meal_protein, meal_fat, meal_calories)
+  VALUES ($1, $2, $3, $4, $5);
+  `,
+      [
+        req.body.name,
+        req.body.carbs,
+        req.body.protein,
+        req.body.fat,
+        req.body.cals,
+      ]
+    )
+    .then(res.send("success"));
+});
 
 app.listen(port, url, () => {
   console.log(`api running on ${url}:${port}`);
