@@ -67,7 +67,7 @@ describe("api tests", () => {
     });
     expect(result.status).toBe(200);
   });
-  it("allows adding new account", async () => {
+  it("adds new account", async () => {
     const result = await fetch(`${api}/user`, {
       method: "PUT",
       body: accountTestBody,

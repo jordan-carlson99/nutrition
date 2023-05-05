@@ -91,7 +91,7 @@ app.get("/goals/:accountname", (req, res) => {
 });
 
 // put a new meal
-app.put("/meals", async (req, res) => {
+app.put("/meals", (req, res) => {
   req.body = validateBody(req.body);
   try {
     client.query(
@@ -208,6 +208,7 @@ app.patch("/schedule/:accountID", (req, res) => {
   }
 });
 
+// verify data is correct type
 function validateBody(body) {
   for (let elem in body) {
     if (
