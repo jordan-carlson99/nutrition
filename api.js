@@ -86,7 +86,7 @@ app.get("/goals/:accountname", (req, res) => {
 });
 
 // put a new meal
-app.put("/meals/:accountname", (req, res) => {
+app.put("/meals/", (req, res, next) => {
   /* validate data
   body :
   {
@@ -97,17 +97,49 @@ app.put("/meals/:accountname", (req, res) => {
     "cals": 150
   } 
    */
-
-  for (let elem in req.body) {
-    if (elem != "name" && typeof req.body[elem] != "number") {
-      req.body[elem] = parseFloat(req.body[elem]);
-    }
-  }
+  req.body = validateBody(req.body);
   client
     .query(
       `INSERT INTO meal (name, meal_carbs, meal_protein, meal_fat, meal_calories)
-  VALUES ($1, $2, $3, $4, $5);
+  VALUES ($1, $2, $3, $4, $5) RETURNING id;
   `,
+      [
+        req.body.name,
+        req.body.carbs,
+        req.body.protein,
+        req.body.fat,
+        req.body.cals,
+      ]
+    )
+    .then((result) => {
+      next(result);
+      res.send("success");
+    });
+  // update meal_schedule
+});
+
+app.use((req, res) => {
+  console.log(req.params.accountname);
+  console.log("good");
+});
+
+// put a new ingredient
+app.put("/ingredient", (req, res) => {
+  /* validate data
+  body :
+  {
+    "name": "name",
+    "carbs": 14,
+    "protein": 16,
+    "fat": 1,
+    "cals": 150
+  } 
+   */
+  req.body = validateBody(req.body);
+  client
+    .query(
+      `INSERT INTO ingredient (name, ingredient_carbs, ingredient_protein, ingredient_fat, ingredient_calories) 
+    VALUES ($1,$2,$3,$4,$5);`,
       [
         req.body.name,
         req.body.carbs,
@@ -118,6 +150,15 @@ app.put("/meals/:accountname", (req, res) => {
     )
     .then(res.send("success"));
 });
+
+function validateBody(body) {
+  for (let elem in body) {
+    if (elem != "name" && typeof body[elem] != "number") {
+      body[elem] = parseFloat(body[elem]);
+    }
+  }
+  return body;
+}
 
 app.listen(port, url, () => {
   console.log(`api running on ${url}:${port}`);
