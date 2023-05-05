@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "api": "node api.js",
+    "api": "nodemon api.js",
     "test": "vitest --watch=false --reporter=verbose",
     "start": "vite & node api.js",
     "build": "vite build",

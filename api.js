@@ -92,19 +92,9 @@ app.get("/goals/:accountname", (req, res) => {
 
 // put a new meal
 app.put("/meals", async (req, res) => {
-  /* validate data
-  body :
-  {
-    "name": "name",
-    "carbs": 14,
-    "protein": 16,
-    "fat": 1,
-    "cals": 150
-  } 
-   */
   req.body = validateBody(req.body);
   try {
-    let response = await client.query(
+    client.query(
       `INSERT INTO meal (name, meal_carbs, meal_protein, meal_fat, meal_calories)
   VALUES ($1, $2, $3, $4, $5);
   `,
@@ -122,21 +112,10 @@ app.put("/meals", async (req, res) => {
     console.log(req.headers);
     res.status(400).send("bad request");
   }
-  // update meal_schedule
 });
 
 // put a new ingredient
 app.put("/ingredient", (req, res) => {
-  /* validate data
-  body :
-  {
-    "name": "name",
-    "carbs": 14,
-    "protein": 16,
-    "fat": 1,
-    "cals": 150
-  } 
-   */
   req.body = validateBody(req.body);
   client
     .query(
@@ -153,9 +132,90 @@ app.put("/ingredient", (req, res) => {
     .then(res.send("success"));
 });
 
+// add user
+app.put("/user", (req, res) => {
+  try {
+    req.body = validateBody(req.body);
+    client.query(
+      `INSERT INTO account (accountname, password, carb_goal, protein_goal, fat_goal, cal_goal)
+  VALUES ($1,$2,$3,$4,$5,$6)`,
+      [
+        req.body.accountname,
+        req.body.password,
+        req.body.carbs,
+        req.body.protein,
+        req.body.fat,
+        req.body.cals,
+      ]
+    );
+    res.status(200).send("success");
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("bad request");
+  }
+});
+
+// update user goals
+app.patch("/goals/:accountname", (req, res) => {
+  try {
+    client.query(
+      `UPDATE account SET
+    accountname= coalesce($1, accountname),
+    password=coalesce($2, password),
+    carb_goal=coalesce($3, carb_goal),
+    protein_goal=coalesce($4, protein_goal),
+    fat_goal=coalesce($5, fat_goal),
+    cal_goal=coalesce($6, cal_goal)
+    WHERE accountname=$7`,
+      [
+        req.body.accountname,
+        req.body.password,
+        req.body.carbs,
+        req.body.protein,
+        req.body.fat,
+        req.body.cals,
+        req.params.accountname,
+      ]
+    );
+    res.status(200).send("success");
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("bad request");
+  }
+});
+
+// update user's meal schedule
+app.patch("/schedule/:accountID", (req, res) => {
+  try {
+    client.query(
+      `UPDATE meal_schedule SET 
+      meal_id=COALESCE($1, meal_id), 
+      meal_number=COALESCE($2,meal_number), 
+      meal_day=COALESCE($3, meal_day) 
+      WHERE account_id=$4 AND meal_id=$5;`,
+      [
+        req.body.newMealID,
+        req.body.mealNumber,
+        req.body.mealDay,
+        req.params.accountID,
+        req.body.mealID,
+      ]
+    );
+    res.status(200).send("success");
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("bad request");
+  }
+});
+
 function validateBody(body) {
   for (let elem in body) {
-    if (elem != "name" && typeof body[elem] != "number") {
+    if (
+      elem != "name" &&
+      elem != "password" &&
+      elem != "accountname" &&
+      typeof body[elem] != "number"
+    ) {
       body[elem] = parseFloat(body[elem]);
     }
   }

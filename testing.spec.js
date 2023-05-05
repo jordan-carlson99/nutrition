@@ -2,12 +2,28 @@ import { expect, describe, it } from "vitest";
 import dotenv from "dotenv";
 dotenv.config();
 
-const testBody = JSON.stringify({
+const mealIngredientTestBody = JSON.stringify({
   name: "test from vitest",
   carbs: "35",
   protein: 16,
   fat: 1,
   cals: 150,
+});
+
+const accountTestBody = JSON.stringify({
+  accountname: "test from vitest",
+  password: "testing",
+  carbs: 35,
+  protein: 16,
+  fat: 1,
+  cals: 150,
+});
+
+const mealScheduleTestBody = JSON.stringify({
+  newMealID: 2,
+  mealID: 3,
+  mealNumber: 2,
+  mealDay: 7,
 });
 
 let api =
@@ -38,7 +54,7 @@ describe("api tests", () => {
   it("adds a meal", async () => {
     const result = await fetch(`${api}/meals`, {
       method: "PUT",
-      body: testBody,
+      body: mealIngredientTestBody,
       headers: { "Content-Type": "application/json" },
     });
     expect(result.status).toBe(200);
@@ -46,7 +62,31 @@ describe("api tests", () => {
   it("adds an ingredient", async () => {
     const result = await fetch(`${api}/ingredient`, {
       method: "PUT",
-      body: testBody,
+      body: mealIngredientTestBody,
+      headers: { "Content-Type": "application/json" },
+    });
+    expect(result.status).toBe(200);
+  });
+  it("allows adding new account", async () => {
+    const result = await fetch(`${api}/user`, {
+      method: "PUT",
+      body: accountTestBody,
+      headers: { "Content-Type": "application/json" },
+    });
+    expect(result.status).toBe(200);
+  });
+  it("allows patching goals for account", async () => {
+    const result = await fetch(`${api}/goals/user1`, {
+      method: "PATCH",
+      body: accountTestBody,
+      headers: { "Content-Type": "application/json" },
+    });
+    expect(result.status).toBe(200);
+  });
+  it("allows patching schedule for user accounts", async () => {
+    const result = await fetch(`${api}/schedule/1`, {
+      method: "PATCH",
+      body: mealScheduleTestBody,
       headers: { "Content-Type": "application/json" },
     });
     expect(result.status).toBe(200);
