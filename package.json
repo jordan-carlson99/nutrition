@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "test": "node api.js & vitest",
-    "start": "vite & nodemon api.js",
+    "api": "node api.js",
+    "test": "vitest --watch=false --reporter=verbose",
+    "start": "vite & node api.js",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

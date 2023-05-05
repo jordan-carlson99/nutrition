@@ -91,7 +91,7 @@ app.get("/goals/:accountname", (req, res) => {
 });
 
 // put a new meal
-app.put("/meals/", (req, res) => {
+app.put("/meals", async (req, res) => {
   /* validate data
   body :
   {
@@ -103,10 +103,10 @@ app.put("/meals/", (req, res) => {
   } 
    */
   req.body = validateBody(req.body);
-  client
-    .query(
+  try {
+    let response = await client.query(
       `INSERT INTO meal (name, meal_carbs, meal_protein, meal_fat, meal_calories)
-  VALUES ($1, $2, $3, $4, $5) RETURNING id;
+  VALUES ($1, $2, $3, $4, $5);
   `,
       [
         req.body.name,
@@ -115,8 +115,13 @@ app.put("/meals/", (req, res) => {
         req.body.fat,
         req.body.cals,
       ]
-    )
-    .then(res.send("success"));
+    );
+    res.status(200).send("success");
+  } catch (error) {
+    console.log(error);
+    console.log(req.headers);
+    res.status(400).send("bad request");
+  }
   // update meal_schedule
 });
 
