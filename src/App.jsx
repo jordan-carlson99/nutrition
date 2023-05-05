@@ -54,11 +54,12 @@ function Breakdown() {
 }
 
 function App() {
+  const [user, setUser] = useState({ accountname: "user2", id: 2 });
   return (
     <>
       <TitleBar />
       <div id="left-side">
-        <UserPanel />
+        <UserPanel user={user} />
         <Metrics />
       </div>
       <div id="right-side">

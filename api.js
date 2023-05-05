@@ -90,6 +90,29 @@ app.get("/goals/:accountname", (req, res) => {
     });
 });
 
+// get groceries
+app.get("/groceries/:accountname", async (req, res) => {
+  try {
+    let response = await client.query(
+      `SELECT account.accountname,
+    meal_schedule.meal_id,
+    meal_item.quantity,
+    ingredient.name
+    FROM account
+    JOIN meal_schedule ON meal_schedule.account_id=account.id
+    JOIN meal_item ON meal_item.meal_id=meal_schedule.meal_id
+    JOIN ingredient ON ingredient.id=meal_item.ingredient_id
+    WHERE account.accountname=$1;
+    `,
+      [req.params.accountname]
+    );
+    res.status(200).send(response.rows);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("bad request");
+  }
+});
+
 // put a new meal
 app.put("/meals", (req, res) => {
   req.body = validateBody(req.body);

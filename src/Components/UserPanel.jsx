@@ -1,4 +1,10 @@
-export default function UserPanel() {
+import dotenv from "../../dotenv";
+dotenv.config();
+
+const api =
+  `${process.env.apiURL}:${process.env.apiPort}` || "http://localhost:3500/";
+
+function UserPanel(props) {
   return (
     <div id="user-panel" className="panel">
       <div className="banner">
@@ -14,7 +20,12 @@ export default function UserPanel() {
       <button className="user-btn" onClick={adjustGoals}>
         Change your goals
       </button>
-      <button className="user-btn" onClick={getGroceries}>
+      <button
+        className="user-btn"
+        onClick={() => {
+          getGroceries(props.user);
+        }}
+      >
         Get your Grocery List
       </button>
     </div>
@@ -33,6 +44,9 @@ async function adjustGoals() {
   console.log("adjust goals");
 }
 
-async function getGroceries() {
-  console.log("get gropceries");
+async function getGroceries(user) {
+  let response = await fetch(`${api}/groceries/${user.accountname}`);
+  console.log(response);
 }
+
+export default UserPanel();
