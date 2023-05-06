@@ -58,7 +58,7 @@ app.get("/meals/:accountname", (req, res) => {
   client
     .query(
       `SELECT account.accountname,
-      meal_schedule.meal_day,
+      meal_schedule.meal_day, meal_schedule.meal_number,
       meal.name,meal.meal_carbs, meal.meal_protein, meal.meal_fat, meal.meal_calories
       FROM account
       JOIN meal_schedule ON meal_schedule.account_id=account.id

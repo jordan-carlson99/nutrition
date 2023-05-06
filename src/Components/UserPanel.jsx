@@ -26,7 +26,6 @@ export default function UserPanel(props) {
           return acc;
         }, {})
       );
-      console.log(ingredientSet);
       setListContent(ingredientSet);
       // setListContent(data);
     }
