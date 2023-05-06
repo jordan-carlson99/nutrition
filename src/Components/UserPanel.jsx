@@ -4,16 +4,31 @@ const api =
   `http://${import.meta.env.VITE_apiURL}:${import.meta.env.VITE_apiPort}` ||
   "http://localhost:3500/";
 
-console.log(api);
-
 export default function UserPanel(props) {
   const [showList, setList] = useState(false);
   const [listContent, setListContent] = useState(null);
   useEffect(() => {
-    async function getGroceries(user) {
+    async function getGroceries() {
       let response = await fetch(`${api}/groceries/${props.user.accountname}`);
       let data = await response.json();
-      setListContent(data);
+      let ingredientSet = Object.values(
+        data.reduce((acc, ingredient) => {
+          if (!acc[ingredient.name]) {
+            acc[ingredient.name] = { ...ingredient };
+          } else {
+            acc[ingredient.name] = {
+              name: ingredient.name,
+              quantity: acc[ingredient.name].quantity + ingredient.quantity,
+              id: ingredient.id,
+              meal_id: ingredient.meal_id,
+            };
+          }
+          return acc;
+        }, {})
+      );
+      console.log(ingredientSet);
+      setListContent(ingredientSet);
+      // setListContent(data);
     }
     getGroceries();
   }, []);
@@ -45,12 +60,10 @@ export default function UserPanel(props) {
         <div className="modal hidden" id="groceryList">
           {listContent.map((item) => {
             return (
-              <>
-                <p>
-                  {item.quantity} X {item.name}
-                </p>{" "}
+              <p key={item.id}>
+                {item.quantity} X {item.name}
                 <br />
-              </>
+              </p>
             );
           })}
           <button

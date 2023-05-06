@@ -97,7 +97,7 @@ app.get("/groceries/:accountname", async (req, res) => {
       `SELECT account.accountname,
     meal_schedule.meal_id,
     meal_item.quantity,
-    ingredient.name
+    ingredient.name, ingredient.id
     FROM account
     JOIN meal_schedule ON meal_schedule.account_id=account.id
     JOIN meal_item ON meal_item.meal_id=meal_schedule.meal_id

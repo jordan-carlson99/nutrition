@@ -1,5 +1,6 @@
 import { useState } from "react";
 import UserPanel from "./Components/UserPanel";
+import Schedule from "./Components/Schedule";
 import "./App.css";
 
 let userName = "username";
@@ -33,12 +34,6 @@ function Metrics() {
   );
 }
 
-function Schedule() {
-  <div className="panel" id="schedule">
-    {/* add in "day" components */}
-  </div>;
-}
-
 function Breakdown() {
   return (
     <div className="panel" id="breakdown">
@@ -63,7 +58,7 @@ function App() {
         <Metrics />
       </div>
       <div id="right-side">
-        <Schedule />
+        <Schedule user={user} />
         <Breakdown />
       </div>
     </>
