@@ -54,7 +54,7 @@ function Breakdown() {
 }
 
 function App() {
-  const [user, setUser] = useState({ accountname: "user2", id: 2 });
+  const [user, setUser] = useState({ accountname: "user1", id: 2 });
   return (
     <>
       <TitleBar />

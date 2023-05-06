@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "api": "nodemon api.js",
-    "frontEnd": "nodemon frontEndServer.js",
     "test": "vitest --watch=false --reporter=verbose",
     "start": "vite & node api.js",
     "build": "vite build",

@@ -7,10 +7,10 @@ dotenv.config();
 import cors from "cors";
 
 const connectionString =
-  process.env.connectionString ||
+  process.env.VITE_connectionString ||
   "postgres://username:password@host:port/database";
-const url = process.env.apiURL || "127.0.0.1";
-const port = process.env.apiPort || 3500;
+const url = process.env.VITE_apiURL || "127.0.0.1";
+const port = process.env.VITE_apiPort || 3500;
 const client = new Client(connectionString);
 
 client.connect();

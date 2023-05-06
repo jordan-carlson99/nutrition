@@ -1,10 +1,22 @@
-import dotenv from "../../dotenv";
-dotenv.config();
+import { useEffect, useState } from "react";
 
 const api =
-  `${process.env.apiURL}:${process.env.apiPort}` || "http://localhost:3500/";
+  `http://${import.meta.env.VITE_apiURL}:${import.meta.env.VITE_apiPort}` ||
+  "http://localhost:3500/";
 
-function UserPanel(props) {
+console.log(api);
+
+export default function UserPanel(props) {
+  const [showList, setList] = useState(false);
+  const [listContent, setListContent] = useState(null);
+  useEffect(() => {
+    async function getGroceries(user) {
+      let response = await fetch(`${api}/groceries/${props.user.accountname}`);
+      let data = await response.json();
+      setListContent(data);
+    }
+    getGroceries();
+  }, []);
   return (
     <div id="user-panel" className="panel">
       <div className="banner">
@@ -23,11 +35,33 @@ function UserPanel(props) {
       <button
         className="user-btn"
         onClick={() => {
-          getGroceries(props.user);
+          console.log(listContent);
+          setList(true);
         }}
       >
         Get your Grocery List
       </button>
+      {showList ? (
+        <div className="modal hidden" id="groceryList">
+          {listContent.map((item) => {
+            return (
+              <>
+                <p>
+                  {item.quantity} X {item.name}
+                </p>{" "}
+                <br />
+              </>
+            );
+          })}
+          <button
+            onClick={() => {
+              setList(false);
+            }}
+          >
+            Close
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -43,10 +77,3 @@ async function addMeal() {
 async function adjustGoals() {
   console.log("adjust goals");
 }
-
-async function getGroceries(user) {
-  let response = await fetch(`${api}/groceries/${user.accountname}`);
-  console.log(response);
-}
-
-export default UserPanel();

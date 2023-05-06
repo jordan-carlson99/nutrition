@@ -27,7 +27,7 @@ const mealScheduleTestBody = JSON.stringify({
 });
 
 let api =
-  `http://${process.env.apiURL}:${process.env.apiPort}` ||
+  `http://${process.env.VITE_apiURL}:${process.env.VITE_apiPort}` ||
   `http://localhost:3000`;
 
 describe("api tests", () => {
@@ -76,7 +76,7 @@ describe("api tests", () => {
     expect(result.status).toBe(200);
   });
   it("allows patching goals for account", async () => {
-    const result = await fetch(`${api}/goals/user1`, {
+    const result = await fetch(`${api}/goals/user2`, {
       method: "PATCH",
       body: accountTestBody,
       headers: { "Content-Type": "application/json" },

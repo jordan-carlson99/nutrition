@@ -8,3 +8,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <App />
   </React.StrictMode>
 );
+// let myTest = process.env.REACT_APP_NOT_SECRET_CODE;
+// console.log(process);
