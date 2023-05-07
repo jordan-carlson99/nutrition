@@ -5,7 +5,7 @@ const api =
   "http://localhost:3500/";
 
 export default function Schedule(props) {
-  const [mealPlan, setMealPlan] = useState(null);
+  const [mealPlan, setMealPlan] = useState(false);
   useEffect(() => {
     async function getSchedule() {
       let response = await fetch(`${api}/meals/${props.user.accountname}`);
@@ -18,37 +18,77 @@ export default function Schedule(props) {
           days[meal.meal_day].push(meal);
         }
       });
-      setMealPlan(days);
+      setMealPlan(Object.values(days));
     }
     getSchedule();
-    console.log(mealPlan);
   }, []);
   return (
     <div className="panel" id="schedule">
-      {mealPlan.map((day) => {
-        return <WeekDay data={day} />;
-      })}
-      {/* add in "day" components */}
+      {mealPlan ? (
+        mealPlan.map((day) => {
+          return <WeekDay data={day} />;
+        })
+      ) : (
+        <a>no</a>
+      )}
     </div>
   );
 }
 
 function WeekDay(props) {
+  let breakfast;
+  let lunch;
+  let dinner;
+  console.log(props.data);
+  props.data.forEach((element) => {
+    if (element.meal_number == 1) {
+      breakfast = element;
+    } else if (element.meal_number == 2) {
+      lunch = element;
+    } else if (element.meal_number == 3) {
+      dinner = element;
+    }
+  });
   return (
-    <div className="week-day">
+    <div className="week-day" key={props.data.meal_day}>
       <div className="banner">
-        <h1 className="banner-title">{props.data[0].meal_day}</h1>
+        <h1 className="banner-title">{props.data.meal_day}</h1>
       </div>
-      <div className="breakfast">
-        <h3 className="breakfast-text">Breakfast</h3>
-        <h4 className="breakfast-text">{props.data[0].name}</h4>
-      </div>
-      <div className="lunch">
-        <h3 className="lunch-text">lunch</h3>
-        <h4 className="lunch-text">
-          {props.data[1].name ? props.data[1].name : none}
-        </h4>
-      </div>
+      {breakfast ? (
+        <div className="breakfast" key={breakfast.id}>
+          <h3 className="breakfast-text">Breakfast</h3>
+          <h4 className="breakfast-text">{breakfast.name}</h4>
+        </div>
+      ) : (
+        <div className="breakfast">
+          <h3 className="breakfast-text">Breakfast</h3>
+          <h4 className="breakfast-text">No value</h4>
+        </div>
+      )}
+
+      {lunch ? (
+        <div className="lunch" key={lunch.key}>
+          <h3 className="lunch-text">Lunch</h3>
+          <h4 className="lunch-text">{lunch.name}</h4>
+        </div>
+      ) : (
+        <div className="lunch">
+          <h3 className="lunch-text">Lunch</h3>
+          <h4 className="lunch-text">No Value</h4>
+        </div>
+      )}
+
+      {dinner ? (
+        <div className="dinner" key={dinner.key}>
+          <h3 className="dinner-text">Dinner</h3>
+          <h4 className="dinner-text">{dinner.name}</h4>
+        </div>
+      ) : (
+        <div className="dinner">
+          <h3 className="dinner-text">Dinner</h3>
+          <h4 className="dinner-text">No Value</h4>
+        </div>
+      )}
     </div>
   );
 }
