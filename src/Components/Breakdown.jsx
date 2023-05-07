@@ -5,32 +5,33 @@ const api =
   "http://localhost:3500/";
 
 export default function Breakdown(props) {
-  const [macroBreakdown, setMacroBreakdown] = useState({
-    carbs: {
-      weeklyTotals: 0,
-      goals: 0,
-      deficit: 0,
-      supplement: 0,
-    },
-    protein: {
-      weeklyTotals: 0,
-      goals: 0,
-      deficit: 0,
-      supplement: 0,
-    },
-    fat: {
-      weeklyTotals: 0,
-      goals: 0,
-      deficit: 0,
-      supplement: 0,
-    },
-    cals: {
-      weeklyTotals: 0,
-      goals: 0,
-      deficit: 0,
-      supplement: 0,
-    },
-  });
+  // const [macroBreakdown, setMacroBreakdown] = useState({
+  //   carbs: {
+  //     weeklyTotals: 0,
+  //     goals: 0,
+  //     deficit: 0,
+  //     supplement: 0,
+  //   },
+  //   protein: {
+  //     weeklyTotals: 0,
+  //     goals: 0,
+  //     deficit: 0,
+  //     supplement: 0,
+  //   },
+  //   fat: {
+  //     weeklyTotals: 0,
+  //     goals: 0,
+  //     deficit: 0,
+  //     supplement: 0,
+  //   },
+  //   cals: {
+  //     weeklyTotals: 0,
+  //     goals: 0,
+  //     deficit: 0,
+  //     supplement: 0,
+  //   },
+  // });
+  const [macroBreakdown, setMacroBreakdown] = useState(props.macros);
   useEffect(() => {
     const getGoals = async () => {
       let response = await fetch(`${api}/goals/${props.user.accountname}`);
@@ -82,6 +83,11 @@ export default function Breakdown(props) {
     };
     getGoals();
   }, [props.totals]);
+  useEffect(() => {
+    props.handleMacros({
+      ...macroBreakdown,
+    });
+  }, [macroBreakdown, props.handleMacros]);
   return (
     <div className="panel" id="breakdown">
       <div className="banner">
