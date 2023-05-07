@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import UserPanel from "./Components/UserPanel";
 import Schedule from "./Components/Schedule";
+import Breakdown from "./Components/Breakdown";
 import "./App.css";
 
 let userName = "username";
@@ -34,22 +35,19 @@ function Metrics() {
   );
 }
 
-function Breakdown() {
-  return (
-    <div className="panel" id="breakdown">
-      <div className="banner">
-        <div className="breakdown-categories">Weekly Totals</div>
-        <div className="breakdown-categories">Goals</div>
-        <div className="breakdown-categories">Deficit/Surplus</div>
-        <div className="breakdown-categories">Supplemental Requirements</div>
-      </div>
-      <div>{/* add in some div containers that have cpfc */}</div>
-    </div>
-  );
-}
-
 function App() {
   const [user, setUser] = useState({ accountname: "user1", id: 2 });
+  const totals = useRef({
+    carbs: 0,
+    protein: 0,
+    fat: 0,
+    cals: 0,
+  });
+  const [totalsSet, setTotalsSet] = useState(false);
+  const handleTotals = (newTotals) => {
+    totals.current = newTotals;
+    setTotalsSet(true);
+  };
   return (
     <>
       <TitleBar />
@@ -58,8 +56,8 @@ function App() {
         <Metrics />
       </div>
       <div id="right-side">
-        <Schedule user={user} />
-        <Breakdown />
+        <Schedule user={user} handleTotals={handleTotals} />
+        {totalsSet && <Breakdown totals={totals.current} />}
       </div>
     </>
   );

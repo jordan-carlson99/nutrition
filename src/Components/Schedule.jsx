@@ -6,6 +6,12 @@ const api =
 
 export default function Schedule(props) {
   const [mealPlan, setMealPlan] = useState(false);
+  // const [totals, setTotals] = useState({
+  //   carbs: 0,
+  //   protein: 0,
+  //   fat: 0,
+  //   cals: 0,
+  // });
   useEffect(() => {
     async function getSchedule() {
       let response = await fetch(`${api}/meals/${props.user.accountname}`);
@@ -19,14 +25,31 @@ export default function Schedule(props) {
         }
       });
       setMealPlan(Object.values(days));
+      // setTotals((prev) => {
+      //   mealPlan.map((element) => {
+      //     prev.carbs += element.meal_carbs;
+      //     prev.protein += element.meal_protein;
+      //     prev.fat += element.meal_fat;
+      //     prev.cals += element.meal_calories;
+      //   });
+      // });
     }
     getSchedule();
+    // console.log(totals);
   }, []);
+  const addTotals = (carbs, protein, fat, cals) => {
+    let newTotals = totals;
+    newTotals.carbs += carbs;
+    newTotals.protein += protein;
+    newTotals.fat += fat;
+    newTotals.cals += cals;
+    return newTotals;
+  };
   return (
     <div className="panel" id="schedule">
       {mealPlan ? (
         mealPlan.map((day) => {
-          return <WeekDay data={day} />;
+          return <WeekDay data={day} handleTotals={props.handleTotals} />;
         })
       ) : (
         <a>no</a>
@@ -39,15 +62,30 @@ function WeekDay(props) {
   let breakfast;
   let lunch;
   let dinner;
-  console.log(props.data);
-  props.data.forEach((element) => {
-    if (element.meal_number == 1) {
-      breakfast = element;
-    } else if (element.meal_number == 2) {
-      lunch = element;
-    } else if (element.meal_number == 3) {
-      dinner = element;
-    }
+  let totalCarbs = 0;
+  let totalProtein = 0;
+  let totalFat = 0;
+  let totalCals = 0;
+  useEffect(() => {
+    props.data.forEach((element) => {
+      totalCarbs += element.meal_carbs;
+      totalProtein += element.meal_protein;
+      totalFat += element.meal_fat;
+      totalCals += element.meal_calories;
+      if (element.meal_number == 1) {
+        breakfast = element;
+      } else if (element.meal_number == 2) {
+        lunch = element;
+      } else if (element.meal_number == 3) {
+        dinner = element;
+      }
+    });
+    props.handleTotals({
+      carbs: totalCarbs,
+      protein: totalProtein,
+      fat: totalFat,
+      cals: totalCals,
+    });
   });
   return (
     <div className="week-day" key={props.data.meal_day}>
@@ -89,6 +127,12 @@ function WeekDay(props) {
           <h4 className="dinner-text">No Value</h4>
         </div>
       )}
+      <div className="daily-totals">
+        <p className="daily-totals-text carbs">Carbs: {totalCarbs}</p>
+        <p className="daily-totals-text protein">Protein: {totalProtein}</p>
+        <p className="daily-totals-text fat">Fat: {totalFat}</p>
+        <p className="daily-totals-text cals">Calories: {totalCals}</p>
+      </div>
     </div>
   );
 }
