@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+const api =
+  `http://${import.meta.env.VITE_apiURL}:${import.meta.env.VITE_apiPort}` ||
+  "http://localhost:3500/";
+
 export default function Breakdown(props) {
   const [macroBreakdown, setMacroBreakdown] = useState({
     carbs: {
@@ -28,24 +32,55 @@ export default function Breakdown(props) {
     },
   });
   useEffect(() => {
-    console.log(props.totals);
-    setMacroBreakdown((prev) => {
-      return {
-        ...prev,
-        carbs: { ...prev.carbs, weeklyTotals: props.totals.carbs },
-        protein: { ...prev.protein, weeklyTotals: props.totals.protein },
-        fat: { ...prev.fat, weeklyTotals: props.totals.fat },
-        cals: { ...prev.cals, weeklyTotals: props.totals.cals },
-      };
-      //   console.log(prev);
-      //   prev.carbs.weeklyTotals = props.totals.carbs;
-      //   prev.protein.weeklyTotals = props.totals.protein;
-      //   prev.fat.weeklyTotals = props.totals.fat;
-      //   prev.cals.weeklyTotals = props.totals.cals;
-      //   console.log(prev);
-      //   return prev;
-    });
-    console.log(macroBreakdown);
+    const getGoals = async () => {
+      let response = await fetch(`${api}/goals/${props.user.accountname}`);
+      let data = await response.json();
+      setMacroBreakdown((prev) => {
+        return {
+          ...prev,
+          carbs: {
+            goals: data[0].carb_goal,
+            weeklyTotals: props.totals.carbs,
+            deficit: data[0].carb_goal - props.totals.carbs,
+            supplement:
+              data[0].carb_goal - props.totals.carbs < 0
+                ? 0
+                : data[0].carb_goal - props.totals.carbs,
+          },
+          protein: {
+            ...prev.protein,
+            goals: data[0].protein_goal,
+            weeklyTotals: props.totals.protein,
+            deficit: data[0].protein_goal - props.totals.protein,
+            supplement:
+              data[0].protein_goal - props.totals.protein < 0
+                ? 0
+                : data[0].protein_goal - props.totals.protein,
+          },
+          fat: {
+            ...prev.fat,
+            goals: data[0].fat_goal,
+            weeklyTotals: props.totals.fat,
+            deficit: data[0].fat_goal - props.totals.fat,
+            supplement:
+              data[0].fat_goal - props.totals.fat < 0
+                ? 0
+                : data[0].fat_goal - props.totals.fat,
+          },
+          cals: {
+            ...prev.cals,
+            goals: data[0].cal_goal,
+            weeklyTotals: props.totals.cals,
+            deficit: data[0].cal_goal - props.totals.cals,
+            supplement:
+              data[0].cal_goal - props.totals.cals < 0
+                ? 0
+                : data[0].cal_goal - props.totals.cals,
+          },
+        };
+      });
+    };
+    getGoals();
   }, [props.totals]);
   return (
     <div className="panel" id="breakdown">

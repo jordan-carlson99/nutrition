@@ -6,12 +6,6 @@ const api =
 
 export default function Schedule(props) {
   const [mealPlan, setMealPlan] = useState(false);
-  // const [totals, setTotals] = useState({
-  //   carbs: 0,
-  //   protein: 0,
-  //   fat: 0,
-  //   cals: 0,
-  // });
   useEffect(() => {
     async function getSchedule() {
       let response = await fetch(`${api}/meals/${props.user.accountname}`);
@@ -25,26 +19,10 @@ export default function Schedule(props) {
         }
       });
       setMealPlan(Object.values(days));
-      // setTotals((prev) => {
-      //   mealPlan.map((element) => {
-      //     prev.carbs += element.meal_carbs;
-      //     prev.protein += element.meal_protein;
-      //     prev.fat += element.meal_fat;
-      //     prev.cals += element.meal_calories;
-      //   });
-      // });
     }
     getSchedule();
     // console.log(totals);
   }, []);
-  const addTotals = (carbs, protein, fat, cals) => {
-    let newTotals = totals;
-    newTotals.carbs += carbs;
-    newTotals.protein += protein;
-    newTotals.fat += fat;
-    newTotals.cals += cals;
-    return newTotals;
-  };
   return (
     <div className="panel" id="schedule">
       {mealPlan ? (
@@ -66,7 +44,21 @@ function WeekDay(props) {
   let totalProtein = 0;
   let totalFat = 0;
   let totalCals = 0;
+  props.data.forEach((element) => {
+    totalCarbs += element.meal_carbs;
+    totalProtein += element.meal_protein;
+    totalFat += element.meal_fat;
+    totalCals += element.meal_calories;
+    if (element.meal_number == 1) {
+      breakfast = element;
+    } else if (element.meal_number == 2) {
+      lunch = element;
+    } else if (element.meal_number == 3) {
+      dinner = element;
+    }
+  });
   useEffect(() => {
+    // horrible
     props.data.forEach((element) => {
       totalCarbs += element.meal_carbs;
       totalProtein += element.meal_protein;
@@ -86,7 +78,7 @@ function WeekDay(props) {
       fat: totalFat,
       cals: totalCals,
     });
-  });
+  }, []);
   return (
     <div className="week-day" key={props.data.meal_day}>
       <div className="banner">

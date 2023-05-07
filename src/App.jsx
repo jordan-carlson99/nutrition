@@ -57,7 +57,7 @@ function App() {
       </div>
       <div id="right-side">
         <Schedule user={user} handleTotals={handleTotals} />
-        {totalsSet && <Breakdown totals={totals.current} />}
+        {totalsSet && <Breakdown totals={totals.current} user={user} />}
       </div>
     </>
   );
