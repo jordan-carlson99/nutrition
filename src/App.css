@@ -52,6 +52,9 @@ header {
 .banner-title {
   margin: 7px;
 }
+#bottom-panels {
+  display: flex;
+}
 
 /* panels */
 #user-panel {
@@ -91,7 +94,7 @@ header {
   height: 45%;
 }
 .chart-box-top {
-  width: 50%;
+  width: 100%;
 }
 .chart-box-bottom {
   height: 100%;
@@ -107,15 +110,22 @@ header {
   margin: 1%;
   background-color: white;
   border-radius: 20px;
+  width: 12%;
 }
 .weekday-body {
   text-align: center;
+  height: 55%;
+}
+.meal {
+  height: 20%;
 }
 .daily-totals {
   background-color: #212529;
   color: white;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  padding: 5px;
+  height: 40%;
 }
 #breakdown {
   flex-direction: row;
@@ -146,4 +156,25 @@ header {
 }
 .breakdown-banner.last {
   border-top-right-radius: 20px;
+}
+
+@media (max-width: 768px) {
+  #panels {
+    flex-direction: column;
+  }
+  #left-side {
+    width: auto;
+  }
+  #right-side {
+    width: auto;
+  }
+  #schedule {
+    overflow-x: scroll;
+  }
+  #breakdown {
+    overflow-x: scroll;
+  }
+  .week-day {
+    width: auto;
+  }
 }

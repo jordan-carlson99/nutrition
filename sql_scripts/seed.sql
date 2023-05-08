@@ -31,29 +31,67 @@ VALUES
 
 INSERT INTO meal (name, meal_carbs, meal_protein, meal_fat, meal_calories)
 VALUES 
-  ('Meal 1', 0, 0, 0, 0),
-  ('Meal 2', 0, 0, 0, 0),
-  ('Meal 3', 0, 0, 0, 0);
+  ('Tuscan Soup', 0, 0, 0, 0),
+  ('Chili', 0, 0, 0, 0),
+  ('Burger', 0, 0, 0, 0),
+  ('Birria', 0, 0, 0, 0),
+  ('Spaghetti', 0, 0, 0, 0),
+  ('Oatmeal', 0, 0, 0, 0),
+  ('Eggs', 0, 0, 0, 0);
 
 -- Create 3 meal schedules
 INSERT INTO meal_schedule (account_id, meal_id, meal_number, meal_day)
 VALUES 
   (1, 1, 1, 1),
   (1, 2, 2, 1),
-  (1, 3, 3, 1);
+  (1, 3, 3, 1),
+  (1,4,1,2),
+  (1,2,2,2),
+  (1,1,3,2),
+  (1,3,1,3),
+  (1,5,2,3),
+  (1,1,3,3),
+  (1,6,1,4),
+  (1,3,2,4),
+  (1,3,3,4),
+  (1,6,1,5),
+  (1,1,2,5),
+  (1,5,3,5),
+  (1,6,1,6),
+  (1,3,2,6),
+  (1,2,3,6),
+  (1,6,1,7),
+  (1,4,1,7),
+  (1,5,1,7);
 
 -- Seed meal_item table
 INSERT INTO meal_item (meal_id, ingredient_id, quantity)
 VALUES
-  -- Meal 1 items
+  -- Tuscan soup items
   (1, 1, 2),
   (1, 2, 1),
   (1, 3, 0.5),
-  -- Meal 2 items
+  -- Chili items
   (2, 2, 1.5),
   (2, 4, 1),
   (2, 5, 1),
-  -- Meal 3 items
+  -- Burger items
   (3, 3, 2),
   (3, 6, 1),
-  (3, 7, 0.5);
+  (3, 7, 0.5),
+  -- Birria
+    (4, 2, 1.5),
+  (4, 4, 1),
+  (4, 5, 1),
+  -- Spaghetti 
+    (5, 1, 2),
+  (5, 2, 1),
+  (5, 3, 0.5),
+  -- Oatmeal
+    (6, 2, 1.5),
+  (6, 4, 1),
+  (6, 5, 1),
+  -- Eggs
+    (7, 1, 2),
+  (7, 2, 1),
+  (7, 3, 0.5);

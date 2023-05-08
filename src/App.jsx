@@ -3,6 +3,7 @@ import UserPanel from "./Components/UserPanel";
 import Schedule from "./Components/Schedule";
 import Breakdown from "./Components/Breakdown";
 import Metrics from "./Components/Metrics";
+import SupplementationChart from "./Components/SupplementationChart";
 import "./App.css";
 
 let userName = "username";
@@ -58,6 +59,7 @@ function App() {
     },
   });
   const handleTotals = (newTotals) => {
+    console.log(newTotals);
     totals.current = newTotals;
     setTotalsSet(true);
   };
@@ -79,14 +81,19 @@ function App() {
         </div>
         <div id="right-side">
           <Schedule user={user} handleTotals={handleTotals} />
-          {totalsSet && (
-            <Breakdown
-              totals={totals.current}
-              user={user}
-              macros={macroBreakdown.current}
-              handleMacros={handleMacros}
-            />
-          )}
+          <div id="bottom-panels">
+            {totalsSet && (
+              <Breakdown
+                totals={totals.current}
+                user={user}
+                macros={macroBreakdown.current}
+                handleMacros={handleMacros}
+              />
+            )}
+            {/* {macrosSet && (
+              <SupplementationChart macros={macroBreakdown.current} />
+            )} */}
+          </div>
         </div>
       </div>
     </>
