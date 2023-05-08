@@ -6,9 +6,11 @@ import {
   Title,
   Tooltip,
   Legend,
+  ArcElement,
+  RadialLinearScale,
 } from "chart.js";
 import { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
+import { Bar, Pie, PolarArea } from "react-chartjs-2";
 
 ChartJS.register(
   CategoryScale,
@@ -16,11 +18,16 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ArcElement,
+  RadialLinearScale
 );
 
+const api =
+  `http://${import.meta.env.VITE_apiURL}:${import.meta.env.VITE_apiPort}` ||
+  "http://localhost:3500/";
+
 export default function Metrics(props) {
-  console.log(props.macros.carbs.supplement);
   const options = {
     responsive: true,
     plugins: {
@@ -58,14 +65,86 @@ export default function Metrics(props) {
       },
     ],
   });
-  //   useEffect(() => {
-  //     setSupplementGraphData((prev) => {
-  //       return {
-  //         ...prev,
-  //         datasets: [],
-  //       };
-  //     });
-  //   }, []);
+  const [diversityGraphData, setDiversityGraphData] = useState({
+    labels: ["Carbs", "Proteins", "Fats"],
+    datasets: [
+      {
+        label: "Carbs",
+        data: [
+          props.macros.carbs.supplement,
+          props.macros.protein.supplement,
+          props.macros.fat.supplement,
+        ],
+        backgroundColor: ["rgba(255, 99, 132, 0.5)"],
+      },
+    ],
+  });
+  const [polarGraphData, setPolarGraphData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "Calorie Sources",
+        data: [],
+        backgroundColor: ["rgba(255, 99, 132, 0.5)"],
+      },
+    ],
+  });
+
+  /*
+  {
+  "labels": [
+    [
+      "Meal 1",
+      "Meal 2"
+    ]
+  ],
+  "datasets": [
+    {
+      "label": "Calorie Sources",
+      "data": [
+        [
+          325,
+          515
+        ]
+      ],
+      "backgroundColor": [
+        "rgba(255, 99, 132, 0.5)"
+      ]
+    }
+  ]
+}
+  */
+
+  useEffect(() => {
+    const getMeals = async () => {
+      let response = await fetch(`${api}/meals/${props.user.accountname}`);
+      let data = await response.json();
+      let dataSet = Object.values(
+        data.reduce((acc, meal) => {
+          if (!acc[meal.name]) {
+            acc[meal.name] = { ...meal };
+          }
+          return acc;
+        }, {})
+      );
+      const updatedData = dataSet.map((meal) => ({
+        name: meal.name,
+        calories: meal.meal_calories,
+      }));
+      setPolarGraphData((prev) => ({
+        ...prev,
+        labels: updatedData.map((meal) => meal.name),
+        datasets: [
+          {
+            ...prev.datasets[0],
+            data: updatedData.map((meal) => meal.calories),
+          },
+        ],
+      }));
+    };
+    getMeals();
+  }, []);
+
   return (
     <div className="panel" id="metric-panel">
       <div className="banner">
@@ -73,7 +152,10 @@ export default function Metrics(props) {
       </div>
       <div className="top metrics">
         {/* bar graph which tracks how much user needs to supplement daily */}
-        <Bar data={supplementGraphData} options={options} />;<p>pie chart</p>
+        <Bar data={supplementGraphData} options={options} />
+        <p>pie chart</p>
+        <Pie options={options} data={diversityGraphData}></Pie>
+        <PolarArea options={options} data={polarGraphData}></PolarArea>
       </div>
       <div className="bottom metrics">
         <p>double bar graph</p>
