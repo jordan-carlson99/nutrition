@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  /* border: 3px solid red; */
+}
+#root {
+  margin: 0;
+  /* border: 3px solid blue; */
+}
+#panels {
+  display: flex;
+}
+header {
+  background-color: #212529;
+  color: white;
+  padding-top: 1%;
+}
+#left-side {
+  width: 30vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+#right-side {
+  display: flex;
+  flex-direction: column;
+  width: 70vw;
+}
+.panel {
+  display: flex;
+  border: 1px solid red;
+}
+.banner {
+  background-color: #212529;
+  color: white;
+}
+
+/* panels */
+#user-panel {
+  flex-direction: column;
+  height: 30%;
+}
+#metric-panel {
+  flex-direction: column;
+  height: 70%;
+}
+#top-metrics {
+  display: flex;
+  flex-direction: row;
+  height: 40%;
+}
+#bottom-metrics {
+  height: 60%;
+}
+.chart-box-top {
+  width: 50%;
+}
+.chart-box-bottom {
+  height: 100%;
+}
+#schedule {
+  flex-direction: row;
+}
+#breakdown {
+  flex-direction: row;
+  width: 100%;
+}

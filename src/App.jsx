@@ -68,22 +68,24 @@ function App() {
   return (
     <>
       <TitleBar />
-      <div id="left-side">
-        <UserPanel user={user} />
-        {totalsSet && macrosSet && (
-          <Metrics user={user} macros={macroBreakdown.current} />
-        )}
-      </div>
-      <div id="right-side">
-        <Schedule user={user} handleTotals={handleTotals} />
-        {totalsSet && (
-          <Breakdown
-            totals={totals.current}
-            user={user}
-            macros={macroBreakdown.current}
-            handleMacros={handleMacros}
-          />
-        )}
+      <div id="panels">
+        <div id="left-side">
+          <UserPanel user={user} />
+          {totalsSet && macrosSet && (
+            <Metrics user={user} macros={macroBreakdown.current} />
+          )}
+        </div>
+        <div id="right-side">
+          <Schedule user={user} handleTotals={handleTotals} />
+          {totalsSet && (
+            <Breakdown
+              totals={totals.current}
+              user={user}
+              macros={macroBreakdown.current}
+              handleMacros={handleMacros}
+            />
+          )}
+        </div>
       </div>
     </>
   );

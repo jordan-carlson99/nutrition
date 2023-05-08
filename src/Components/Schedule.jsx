@@ -82,7 +82,7 @@ function WeekDay(props) {
   return (
     <div className="week-day" key={props.data.meal_day}>
       <div className="banner">
-        <h1 className="banner-title">{props.data.meal_day}</h1>
+        <h1 className="banner-title">Monday</h1>
       </div>
       {breakfast ? (
         <div className="breakfast" key={breakfast.id}>

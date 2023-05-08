@@ -28,18 +28,22 @@ const api =
   "http://localhost:3500/";
 
 export default function Metrics(props) {
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
+  const options = (title) => {
+    return {
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: title,
+        },
       },
-      title: {
-        display: true,
-        text: "Daily Supplementation",
-      },
-    },
+    };
   };
+
   const [supplementGraphData, setSupplementGraphData] = useState({
     labels: ["daily"],
     datasets: [
@@ -90,31 +94,6 @@ export default function Metrics(props) {
     ],
   });
 
-  /*
-  {
-  "labels": [
-    [
-      "Meal 1",
-      "Meal 2"
-    ]
-  ],
-  "datasets": [
-    {
-      "label": "Calorie Sources",
-      "data": [
-        [
-          325,
-          515
-        ]
-      ],
-      "backgroundColor": [
-        "rgba(255, 99, 132, 0.5)"
-      ]
-    }
-  ]
-}
-  */
-
   useEffect(() => {
     const getMeals = async () => {
       let response = await fetch(`${api}/meals/${props.user.accountname}`);
@@ -150,38 +129,28 @@ export default function Metrics(props) {
       <div className="banner">
         <h1 className="banner-title">Your metrics</h1>
       </div>
-      <div className="top metrics">
-        {/* bar graph which tracks how much user needs to supplement daily */}
-        <Bar data={supplementGraphData} options={options} />
-        <p>pie chart</p>
-        <Pie options={options} data={diversityGraphData}></Pie>
-        <PolarArea options={options} data={polarGraphData}></PolarArea>
+      <div id="top-metrics">
+        <div className="chart-box">
+          <PolarArea
+            options={options("Caloric Sources")}
+            data={polarGraphData}
+          ></PolarArea>
+        </div>
+        <div className="chart-box">
+          <Pie
+            options={options("Macronutrient Ratios")}
+            data={diversityGraphData}
+          ></Pie>
+        </div>
       </div>
-      <div className="bottom metrics">
-        <p>double bar graph</p>
+      <div id="bottom-metrics">
+        <div className="chart-box">
+          <Bar
+            data={supplementGraphData}
+            options={options("Daily Supplementation")}
+          />
+        </div>
       </div>
     </div>
   );
 }
-
-// const BarChart = ({ chartData }) => {
-//   return (
-//     <div className="chart-container">
-//       <h2 style={{ textAlign: "center" }}>Bar Chart</h2>
-//       <Bar
-//         data={chartData}
-//         options={{
-//           plugins: {
-//             title: {
-//               display: true,
-//               text: "Users Gained between 2016-2020",
-//             },
-//             legend: {
-//               display: false,
-//             },
-//           },
-//         }}
-//       />
-//     </div>
-//   );
-// };
