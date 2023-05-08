@@ -3,7 +3,6 @@ import UserPanel from "./Components/UserPanel";
 import Schedule from "./Components/Schedule";
 import Breakdown from "./Components/Breakdown";
 import Metrics from "./Components/Metrics";
-import SupplementationChart from "./Components/SupplementationChart";
 import "./App.css";
 
 let userName = "username";

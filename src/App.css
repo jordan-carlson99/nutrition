@@ -2,12 +2,10 @@ body {
   margin: 0;
   height: 100vh;
   width: 100vw;
-  /* border: 3px solid red; */
 }
 #root {
   margin: 0;
   background-color: #d9d9d9;
-  /* border: 3px solid blue; */
 }
 #panels {
   display: flex;
@@ -51,6 +49,7 @@ header {
 }
 .banner-title {
   margin: 7px;
+  white-space: nowrap;
 }
 #bottom-panels {
   display: flex;
@@ -60,7 +59,9 @@ header {
 #user-panel {
   flex-direction: column;
   height: 20%;
-  margin: 5%;
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 #button-container {
   display: flex;
@@ -79,6 +80,14 @@ header {
 #bottom-btn {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+}
+#shopping-list {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.shopping-item {
+  font-size: smaller;
 }
 #metric-panel {
   flex-direction: column;
@@ -137,6 +146,7 @@ header {
 .breakdown-categories {
   display: flex;
   flex-direction: column;
+  text-align: center;
   background-color: white;
 }
 .breakdown-categories.first {

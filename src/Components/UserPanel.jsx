@@ -36,39 +36,18 @@ export default function UserPanel(props) {
       <div className="banner">
         <h1 className="banner-title">Adjust Your Plan</h1>
       </div>
-      <div id="button-container">
-        <button className="user-btn" onClick={adjustMealPlan}>
-          {" "}
-          Change your meal plan
-        </button>
-        <button className="user-btn" onClick={addMeal}>
-          Add a recipe
-        </button>
-        <button className="user-btn" onClick={adjustGoals}>
-          Change your goals
-        </button>
-        <button
-          id="bottom-btn"
-          className="user-btn"
-          onClick={() => {
-            console.log(listContent);
-            setList(true);
-          }}
-        >
-          Get your Grocery List
-        </button>
-      </div>
       {showList ? (
-        <div className="modal hidden" id="groceryList">
+        <div id="shopping-list">
           {listContent.map((item) => {
             return (
-              <p key={item.id}>
+              <li className="shopping-item" key={item.id}>
                 {item.quantity} X {item.name}
                 <br />
-              </p>
+              </li>
             );
           })}
           <button
+            className="user-btn"
             onClick={() => {
               setList(false);
             }}
@@ -76,7 +55,30 @@ export default function UserPanel(props) {
             Close
           </button>
         </div>
-      ) : null}
+      ) : (
+        <div id="button-container">
+          <button className="user-btn" onClick={adjustMealPlan}>
+            {" "}
+            Change your meal plan
+          </button>
+          <button className="user-btn" onClick={addMeal}>
+            Add a recipe
+          </button>
+          <button className="user-btn" onClick={adjustGoals}>
+            Change your goals
+          </button>
+          <button
+            id="bottom-btn"
+            className="user-btn"
+            onClick={() => {
+              console.log(listContent);
+              setList(true);
+            }}
+          >
+            Get your Grocery List
+          </button>
+        </div>
+      )}
     </div>
   );
 }
