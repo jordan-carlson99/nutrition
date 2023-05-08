@@ -6,6 +6,7 @@ body {
 }
 #root {
   margin: 0;
+  background-color: #d9d9d9;
   /* border: 3px solid blue; */
 }
 #panels {
@@ -13,8 +14,16 @@ body {
 }
 header {
   background-color: #212529;
+  display: flex;
   color: white;
   padding-top: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#title {
+  display: flex;
+  text-align: center;
 }
 #left-side {
   width: 30vw;
@@ -29,21 +38,49 @@ header {
 }
 .panel {
   display: flex;
-  border: 1px solid red;
+  border-radius: 20px;
+  background-color: white;
+  overflow-y: scroll;
 }
 .banner {
   background-color: #212529;
+  text-align: center;
   color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.banner-title {
+  margin: 7px;
 }
 
 /* panels */
 #user-panel {
   flex-direction: column;
-  height: 30%;
+  height: 20%;
+  margin: 5%;
+}
+#button-container {
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  width: 100%;
+}
+.user-btn {
+  border: 0;
+  background-color: white;
+  height: 25%;
+}
+.user-btn:hover {
+  background-color: rgb(200, 200, 200);
+}
+#bottom-btn {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 #metric-panel {
   flex-direction: column;
-  height: 70%;
+  height: 60%;
+  margin: 5%;
 }
 #top-metrics {
   display: flex;
@@ -51,7 +88,7 @@ header {
   height: 40%;
 }
 #bottom-metrics {
-  height: 60%;
+  height: 45%;
 }
 .chart-box-top {
   width: 50%;
@@ -60,9 +97,53 @@ header {
   height: 100%;
 }
 #schedule {
+  display: flex;
   flex-direction: row;
+  background-color: #d9d9d9;
+}
+.week-day {
+  display: flex;
+  flex-direction: column;
+  margin: 1%;
+  background-color: white;
+  border-radius: 20px;
+}
+.weekday-body {
+  text-align: center;
+}
+.daily-totals {
+  background-color: #212529;
+  color: white;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 #breakdown {
   flex-direction: row;
-  width: 100%;
+  width: fit-content;
+  background-color: #d9d9d9;
+  justify-content: flex-start;
+  border-radius: 20px;
+}
+.breakdown-categories {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+.breakdown-categories.first {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+.breakdown-categories.last {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.breakdown-banner {
+  background-color: #212529;
+  color: white;
+}
+.breakdown-banner.first {
+  border-top-left-radius: 20px;
+}
+.breakdown-banner.last {
+  border-top-right-radius: 20px;
 }

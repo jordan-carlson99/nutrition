@@ -10,11 +10,13 @@ let userName = "username";
 function TitleBar() {
   return (
     <header>
-      <div id="sign-in-panel">
+      {/* <div id="sign-in-panel">
         <h3 id="welcome-message">Welcome {userName}</h3>
-        {/* <p></p> */}
+        <p></p>
+      </div> */}
+      <div id="title">
+        <h1>Idunns Orchard</h1>
       </div>
-      <div id="title">Nutrition App</div>
     </header>
   );
 }

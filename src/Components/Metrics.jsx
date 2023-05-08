@@ -50,22 +50,22 @@ export default function Metrics(props) {
       {
         label: "Carbs",
         data: [props.macros.carbs.supplement / 7],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(219, 188, 48, 0.75)",
       },
       {
         label: "Protein",
         data: [props.macros.protein.supplement / 7],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: ["rgba(230, 53, 150, 0.75)"],
       },
       {
         label: "Fat",
         data: [props.macros.fat.supplement / 7],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: ["rgba(222, 148, 64, 0.75)"],
       },
       {
         label: "Calories",
         data: [props.macros.cals.supplement / 7],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(201, 44, 63, 0.75)",
       },
     ],
   });
@@ -79,7 +79,11 @@ export default function Metrics(props) {
           props.macros.protein.supplement,
           props.macros.fat.supplement,
         ],
-        backgroundColor: ["rgba(255, 99, 132, 0.5)"],
+        backgroundColor: [
+          "rgba(219, 188, 48, 0.75)",
+          "rgba(230, 53, 150, 0.75)",
+          "rgba(222, 148, 64, 0.75)",
+        ],
       },
     ],
   });
@@ -89,7 +93,12 @@ export default function Metrics(props) {
       {
         label: "Calorie Sources",
         data: [],
-        backgroundColor: ["rgba(255, 99, 132, 0.5)"],
+        backgroundColor: [
+          "rgba(219, 188, 48, 0.75)",
+          "rgba(230, 53, 150, 0.75)",
+          "rgba(222, 148, 64, 0.75)",
+          "rgba(201, 44, 63, 0.75)",
+        ],
       },
     ],
   });
@@ -130,13 +139,13 @@ export default function Metrics(props) {
         <h1 className="banner-title">Your metrics</h1>
       </div>
       <div id="top-metrics">
-        <div className="chart-box">
+        <div className="chart-box-top">
           <PolarArea
             options={options("Caloric Sources")}
             data={polarGraphData}
           ></PolarArea>
         </div>
-        <div className="chart-box">
+        <div className="chart-box-top">
           <Pie
             options={options("Macronutrient Ratios")}
             data={diversityGraphData}
@@ -144,7 +153,7 @@ export default function Metrics(props) {
         </div>
       </div>
       <div id="bottom-metrics">
-        <div className="chart-box">
+        <div className="chart-box-bottom">
           <Bar
             data={supplementGraphData}
             options={options("Daily Supplementation")}

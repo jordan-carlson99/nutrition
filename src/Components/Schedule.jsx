@@ -84,41 +84,43 @@ function WeekDay(props) {
       <div className="banner">
         <h1 className="banner-title">Monday</h1>
       </div>
-      {breakfast ? (
-        <div className="breakfast" key={breakfast.id}>
-          <h3 className="breakfast-text">Breakfast</h3>
-          <h4 className="breakfast-text">{breakfast.name}</h4>
-        </div>
-      ) : (
-        <div className="breakfast">
-          <h3 className="breakfast-text">Breakfast</h3>
-          <h4 className="breakfast-text">No value</h4>
-        </div>
-      )}
+      <div className="weekday-body">
+        {breakfast ? (
+          <div className="breakfast" key={breakfast.id}>
+            <h3 className="breakfast-text">Breakfast</h3>
+            <h4 className="breakfast-text">{breakfast.name}</h4>
+          </div>
+        ) : (
+          <div className="breakfast">
+            <h3 className="breakfast-text">Breakfast</h3>
+            <h4 className="breakfast-text">No value</h4>
+          </div>
+        )}
 
-      {lunch ? (
-        <div className="lunch" key={lunch.key}>
-          <h3 className="lunch-text">Lunch</h3>
-          <h4 className="lunch-text">{lunch.name}</h4>
-        </div>
-      ) : (
-        <div className="lunch">
-          <h3 className="lunch-text">Lunch</h3>
-          <h4 className="lunch-text">No Value</h4>
-        </div>
-      )}
+        {lunch ? (
+          <div className="lunch" key={lunch.key}>
+            <h3 className="lunch-text">Lunch</h3>
+            <h4 className="lunch-text">{lunch.name}</h4>
+          </div>
+        ) : (
+          <div className="lunch">
+            <h3 className="lunch-text">Lunch</h3>
+            <h4 className="lunch-text">No Value</h4>
+          </div>
+        )}
 
-      {dinner ? (
-        <div className="dinner" key={dinner.key}>
-          <h3 className="dinner-text">Dinner</h3>
-          <h4 className="dinner-text">{dinner.name}</h4>
-        </div>
-      ) : (
-        <div className="dinner">
-          <h3 className="dinner-text">Dinner</h3>
-          <h4 className="dinner-text">No Value</h4>
-        </div>
-      )}
+        {dinner ? (
+          <div className="dinner" key={dinner.key}>
+            <h3 className="dinner-text">Dinner</h3>
+            <h4 className="dinner-text">{dinner.name}</h4>
+          </div>
+        ) : (
+          <div className="dinner">
+            <h3 className="dinner-text">Dinner</h3>
+            <h4 className="dinner-text">No Value</h4>
+          </div>
+        )}
+      </div>
       <div className="daily-totals">
         <p className="daily-totals-text carbs">Carbs: {totalCarbs}</p>
         <p className="daily-totals-text protein">Protein: {totalProtein}</p>

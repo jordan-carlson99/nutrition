@@ -64,17 +64,20 @@ export default function Breakdown(props) {
   }, [macroBreakdown, props.handleMacros]);
   return (
     <div className="panel" id="breakdown">
-      <div className="breakdown-categories">
-        <div className="banner">
+      <div className="breakdown-categories first">
+        <div className="breakdown-banner first">
           <h1 className="banner-title">Weekly Totals</h1>
         </div>
-        <p className="carbs">{macroBreakdown.carbs.weeklyTotals}</p>
-        <p className="protein">{macroBreakdown.protein.weeklyTotals}</p>
-        <p className="fat">{macroBreakdown.fat.weeklyTotals}</p>
-        <p className="cals">{macroBreakdown.cals.weeklyTotals}</p>
+        <p className="carbs">Carbs: {macroBreakdown.carbs.weeklyTotals}</p>
+        <p className="protein">
+          {" "}
+          Protein: {macroBreakdown.protein.weeklyTotals}
+        </p>
+        <p className="fat">Fat: {macroBreakdown.fat.weeklyTotals}</p>
+        <p className="cals">Cals: {macroBreakdown.cals.weeklyTotals}</p>
       </div>
       <div className="breakdown-categories">
-        <div className="banner">
+        <div className="breakdown-banner">
           <h1 className="banner-title">Goals</h1>
         </div>
         <p className="carbs">{macroBreakdown.carbs.goals}</p>
@@ -82,17 +85,8 @@ export default function Breakdown(props) {
         <p className="fat">{macroBreakdown.fat.goals}</p>
         <p className="cals">{macroBreakdown.cals.goals}</p>
       </div>
-      <div className="breakdown-categories">
-        <div className="banner">
-          <h1 className="banner-title">Deficit</h1>
-        </div>
-        <p className="carbs">{macroBreakdown.carbs.deficit}</p>
-        <p className="protein">{macroBreakdown.protein.deficit}</p>
-        <p className="fat">{macroBreakdown.fat.deficit}</p>
-        <p className="cals">{macroBreakdown.cals.deficit}</p>
-      </div>
-      <div className="breakdown-categories">
-        <div className="banner">
+      <div className="breakdown-categories last">
+        <div className="breakdown-banner last">
           <h1 className="banner-title">Supplement</h1>
         </div>
         <p className="carbs">{macroBreakdown.carbs.supplement}</p>
@@ -100,7 +94,6 @@ export default function Breakdown(props) {
         <p className="fat">{macroBreakdown.fat.supplement}</p>
         <p className="cals">{macroBreakdown.cals.supplement}</p>
       </div>
-      <div>{/* add in some div containers that have cpfc */}</div>
     </div>
   );
 }
