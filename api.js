@@ -113,6 +113,19 @@ app.get("/groceries/:accountname", async (req, res) => {
   }
 });
 
+app.get("/ingredients/:name", async (req, res) => {
+  console.log(req.params.name);
+  try {
+    let response = await client.query(
+      `SELECT * FROM ingredient WHERE name LIKE '%${req.params.name}%';`
+    );
+    res.status(200).send(response.rows);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("bad request");
+  }
+});
+
 // put a new meal
 app.put("/meals", (req, res) => {
   req.body = validateBody(req.body);

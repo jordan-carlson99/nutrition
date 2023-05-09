@@ -108,6 +108,32 @@ header {
 #goal-form button:hover {
   background-color: rgb(200, 200, 200);
 }
+.ingredient-result {
+  display: flex;
+  flex-direction: row;
+}
+#search-container {
+  display: flex;
+}
+#left-meal {
+  width: 60%;
+}
+#search-bar {
+  width: 80%;
+}
+.ingredient-result {
+  display: flex;
+  justify-content: space-around;
+}
+.ingredient-result button {
+  padding: 10%;
+  background-color: white;
+  border: none;
+}
+.ingredient-result button:hover {
+  background-color: rgb(200, 200, 200);
+}
+
 #metric-panel {
   flex-direction: column;
   height: 60%;

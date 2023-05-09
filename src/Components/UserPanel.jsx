@@ -14,6 +14,8 @@ export default function UserPanel(props) {
   const [showGoals, setGoals] = useState(false);
   const [showRecipe, setRecipe] = useState(false);
   const [listContent, setListContent] = useState(null);
+  const [ingredientResults, setIngredientResults] = useState(null);
+  const [newMeal, setNewMeal] = useState([]);
 
   const goalSubmitHandler = (event) => {
     event.preventDefault();
@@ -32,6 +34,29 @@ export default function UserPanel(props) {
     });
     setGoals(false);
     props.handleGoalsUpdate();
+  };
+
+  const searchIngredients = async (event) => {
+    event.preventDefault();
+    let searchVal = new FormData(event.target.parentNode);
+    let response = await fetch(`${api}/ingredients/${searchVal.get("name")}`);
+    let data = await response.json();
+    setIngredientResults(data);
+  };
+
+  const handleNewMeal = (ingredient, addOrRem) => {
+    if (addOrRem) {
+      setNewMeal([...newMeal, ingredient]);
+    } else {
+      setNewMeal((prev) => {
+        prev.splice(prev.indexOf(ingredient), 1);
+        return prev;
+      });
+    }
+  };
+
+  const submitMeal = () => {
+    setRecipe(false);
   };
 
   useEffect(() => {
@@ -109,13 +134,55 @@ export default function UserPanel(props) {
           </button>
         </form>
       ) : showRecipe ? (
-        <form id="recipe-form"></form>
+        <div id="search-container">
+          <div id="left-meal">
+            <div>
+              <button type="button" className="user-btn" onClick={submitMeal}>
+                Submit Meal
+              </button>
+              <form>
+                <input
+                  id="search-bar"
+                  type="search"
+                  placeholder="Search for ingredients"
+                  name="name"
+                ></input>
+                <button
+                  type="button"
+                  onClick={searchIngredients}
+                  className="user-btn"
+                >
+                  Search
+                </button>
+              </form>
+            </div>
+            <div>
+              <div id="results-container">
+                {ingredientResults
+                  ? ingredientResults.map((result) => {
+                      return (
+                        <Result
+                          name={result.name}
+                          key={result.id}
+                          handleNewMeal={handleNewMeal}
+                        />
+                      );
+                    })
+                  : null}
+              </div>
+            </div>
+          </div>
+          <div id="right-meal">
+            <div id="new-meal-container">
+              {newMeal.map((ingredient, i) => {
+                return <MealList key={i} name={ingredient} />;
+              })}
+            </div>
+          </div>
+        </div>
       ) : (
         <div id="button-container">
-          <button className="user-btn" onClick={adjustMealPlan}>
-            {" "}
-            Change your meal plan
-          </button>
+          <button className="user-btn"> Change your meal plan</button>
           <button
             className="user-btn"
             onClick={() => {
@@ -148,19 +215,24 @@ export default function UserPanel(props) {
   );
 }
 
-async function adjustMealPlan() {
-  console.log("adjust plan");
+function Result(props) {
+  const addToMeal = (event) => {
+    props.handleNewMeal(event.target.previousElementSibling.innerText, true);
+  };
+  return (
+    <div className="ingredient-result">
+      <p>{props.name}</p>
+      <button className="add-btn" onClick={addToMeal}>
+        +
+      </button>
+    </div>
+  );
 }
 
-async function addMeal() {
-  console.log("add meal");
+function MealList(props) {
+  return (
+    <div>
+      <p>{props.name}</p>
+    </div>
+  );
 }
-
-/*
-<form
-            method="PATCH"
-            action={`${api}/goals/${props.user.accountname}`}>
-            ...
-            <button type="submit">Submit</button>
-          </form>
-*/
