@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const api =
-  `http://${import.meta.env.VITE_apiURL}:${import.meta.env.VITE_apiPort}` ||
+  `${import.meta.env.VITE_apiURL}:${import.meta.env.VITE_apiPort}` ||
   "http://localhost:3500/";
 
 export default function UserPanel(props) {
