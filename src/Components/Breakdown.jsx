@@ -84,7 +84,7 @@ export default function Breakdown(props) {
       });
     };
     getGoals();
-  }, [props.totals]);
+  }, [props.totals, props.goalsUpdate]);
   useEffect(() => {
     props.handleMacros({
       ...macroBreakdown,
@@ -114,7 +114,7 @@ export default function Breakdown(props) {
         },
       ],
     });
-  }, [macroBreakdown, props.handleMacros]);
+  }, [macroBreakdown, props.handleMacros, props.goalsUpdate]);
   return (
     <div className="panel" id="breakdown">
       <div className="breakdown-categories first">

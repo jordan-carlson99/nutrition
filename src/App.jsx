@@ -24,13 +24,13 @@ function TitleBar() {
 function App() {
   const [user, setUser] = useState({ accountname: "user1", id: 2 });
   const [totalsSet, setTotalsSet] = useState(false);
+  const [macrosSet, setMacrosSet] = useState(false);
   const totals = useRef({
     carbs: 0,
     protein: 0,
     fat: 0,
     cals: 0,
   });
-  const [macrosSet, setMacrosSet] = useState(false);
   const macroBreakdown = useRef({
     carbs: {
       weeklyTotals: 0,
@@ -57,8 +57,11 @@ function App() {
       supplement: 0,
     },
   });
+  const [goalsUpdate, setGoalsUpdate] = useState(false);
+  const handleGoalsUpdate = () => {
+    setGoalsUpdate(!goalsUpdate);
+  };
   const handleTotals = (newTotals) => {
-    console.log(newTotals);
     totals.current = newTotals;
     setTotalsSet(true);
   };
@@ -73,7 +76,7 @@ function App() {
       <TitleBar />
       <div id="panels">
         <div id="left-side">
-          <UserPanel user={user} />
+          <UserPanel user={user} handleGoalsUpdate={handleGoalsUpdate} />
           {totalsSet && macrosSet && (
             <Metrics user={user} macros={macroBreakdown.current} />
           )}
@@ -87,6 +90,7 @@ function App() {
                 user={user}
                 macros={macroBreakdown.current}
                 handleMacros={handleMacros}
+                goalsUpdate={goalsUpdate}
               />
             )}
             {/* {macrosSet && (
