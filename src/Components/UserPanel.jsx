@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
+let api;
+if (import.meta.env.VITE_apiPort) {
+  api =
+    `${import.meta.env.VITE_apiURL}:${import.meta.env.VITE_apiPort}` ||
+    "http://localhost:3500/";
+} else {
+  api = `${import.meta.env.VITE_apiURL}` || "http://localhost:3500/";
+}
 
-const api =
-  `${import.meta.env.VITE_apiURL}:${import.meta.env.VITE_apiPort}` ||
-  "http://localhost:3500/";
-
+console.log(api);
 export default function UserPanel(props) {
   const [showList, setList] = useState(false);
   const [listContent, setListContent] = useState(null);

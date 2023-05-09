@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 
-const api =
-  `${import.meta.env.VITE_apiURL}:${import.meta.env.VITE_apiPort}` ||
-  "http://localhost:3500/";
+let api;
+if (import.meta.env.VITE_apiPort) {
+  api =
+    `${import.meta.env.VITE_apiURL}:${import.meta.env.VITE_apiPort}` ||
+    "http://localhost:3500/";
+} else {
+  api = `${import.meta.env.VITE_apiURL}` || "http://localhost:3500/";
+}
 
 export default function Schedule(props) {
   const [mealPlan, setMealPlan] = useState(false);
