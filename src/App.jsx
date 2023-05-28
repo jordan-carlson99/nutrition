@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import UserPanel from "./Components/UserPanel/UserPanel";
 import Schedule from "./Components/Schedule";
-import Breakdown from "./Components/Breakdown";
+import Breakdown from "./Components/Breakdown/Breakdown";
 import Metrics from "./Components/Metrics";
 import "./App.css";
 
