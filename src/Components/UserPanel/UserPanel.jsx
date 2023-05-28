@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import MealPlan from "./MealPlan";
+import styles from "./UserPanel.module.css";
 
 let api;
 if (import.meta.env.VITE_apiPort) {

@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import styles from "./Breakdown.module.css";
 
 ChartJS.register(
   CategoryScale,
@@ -18,7 +19,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
 let api;
 if (import.meta.env.VITE_apiPort) {
   api =

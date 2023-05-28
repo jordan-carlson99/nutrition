@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "./Schedule.module.css";
 
 let api;
 if (import.meta.env.VITE_apiPort) {

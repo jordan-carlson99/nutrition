@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "./UserPanel.module.css";
 
 export default function ChangeMealPlan(props) {
   const [meals, setMeals] = useState(null);
@@ -33,6 +34,8 @@ function Meal(props) {
   return (
     <div key={`mealplanchange-${props.meal.id}`}>
       <h3>{props.meal.name}</h3>
+      <button>Add/Remove from plan</button>
+      <button>Edit Meal</button>
       <div>
         <p>{`cals: ${props.meal.meal_calories}`}</p>
         <p>{`carbs: ${props.meal.meal_carbs}`}</p>

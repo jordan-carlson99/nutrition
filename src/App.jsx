@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import UserPanel from "./Components/UserPanel/UserPanel";
-import Schedule from "./Components/Schedule";
+import Schedule from "./Components/Schedule/Schedule";
 import Breakdown from "./Components/Breakdown/Breakdown";
-import Metrics from "./Components/Metrics";
+import Metrics from "./Components/yourMetrics/Metrics";
 import "./App.css";
 
 function TitleBar() {
