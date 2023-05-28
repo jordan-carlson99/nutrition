@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import MealPlan from "./MealPlan";
+import styles from "./UserPanel.module.css";
 
 let api;
 if (import.meta.env.VITE_apiPort) {
@@ -13,6 +15,7 @@ export default function UserPanel(props) {
   const [showList, setList] = useState(false);
   const [showGoals, setGoals] = useState(false);
   const [showRecipe, setRecipe] = useState(false);
+  const [showMealPlan, setMealPlan] = useState(false);
   const [listContent, setListContent] = useState(null);
   const [ingredientResults, setIngredientResults] = useState(null);
   const [newMeal, setNewMeal] = useState([]);
@@ -57,6 +60,10 @@ export default function UserPanel(props) {
 
   const submitMeal = () => {
     setRecipe(false);
+  };
+
+  const handleMealPlan = () => {
+    setMealPlan(!showMealPlan);
   };
 
   useEffect(() => {
@@ -180,9 +187,19 @@ export default function UserPanel(props) {
             </div>
           </div>
         </div>
+      ) : showMealPlan ? (
+        <MealPlan handleMealPlan={handleMealPlan} api={api} />
       ) : (
         <div id="button-container">
-          <button className="user-btn"> Change your meal plan</button>
+          <button
+            className="user-btn"
+            onClick={() => {
+              setMealPlan(true);
+            }}
+          >
+            {" "}
+            Change your meal plan
+          </button>
           <button
             className="user-btn"
             onClick={() => {
@@ -203,7 +220,6 @@ export default function UserPanel(props) {
             id="bottom-btn"
             className="user-btn"
             onClick={() => {
-              console.log(listContent);
               setList(true);
             }}
           >

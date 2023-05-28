@@ -11,7 +11,7 @@ import {
 } from "chart.js";
 import { useEffect, useState } from "react";
 import { Bar, Pie, PolarArea } from "react-chartjs-2";
-
+import styles from "./Metrics.module.css";
 ChartJS.register(
   CategoryScale,
   LinearScale,
