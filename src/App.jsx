@@ -1,11 +1,9 @@
 import { useRef, useState } from "react";
-import UserPanel from "./Components/UserPanel";
+import UserPanel from "./Components/UserPanel/UserPanel";
 import Schedule from "./Components/Schedule";
 import Breakdown from "./Components/Breakdown";
 import Metrics from "./Components/Metrics";
 import "./App.css";
-
-let userName = "username";
 
 function TitleBar() {
   return (
