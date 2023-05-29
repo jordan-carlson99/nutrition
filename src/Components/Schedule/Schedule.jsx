@@ -44,7 +44,7 @@ export default function Schedule(props) {
     // console.log(totals);
   }, []);
   return (
-    <div className="panel" id="schedule">
+    <div className={styles["panel"]} id={styles["schedule"]}>
       {mealPlan ? (
         mealPlan.map((day) => {
           return <WeekDay data={day} handleTotals={props.handleTotals} />;
@@ -111,52 +111,52 @@ function WeekDay(props) {
     // });
   }, []);
   return (
-    <div className="week-day" key={props.data.meal_day}>
-      <div className="banner">
-        <h1 className="banner-title">{day}</h1>
+    <div className={styles["week-day"]} key={props.data.meal_day}>
+      <div className={styles["banner"]}>
+        <h1 className={styles["banner-title"]}>{day}</h1>
       </div>
-      <div className="weekday-body">
+      <div className={styles["weekday-body"]}>
         {breakfast ? (
-          <div className="meal" key={breakfast.id}>
-            <h3 className="breakfast-text">Breakfast</h3>
-            <h4 className="breakfast-text">{breakfast.name}</h4>
+          <div className={styles["meal"]} key={breakfast.id}>
+            <h3 className={styles["breakfast-text"]}>Breakfast</h3>
+            <h4 className={styles["breakfast-text"]}>{breakfast.name}</h4>
           </div>
         ) : (
-          <div className="meal">
-            <h3 className="breakfast-text">Breakfast</h3>
-            <h4 className="breakfast-text">No value</h4>
+          <div className={styles["meal"]}>
+            <h3 className={styles["breakfast-text"]}>Breakfast</h3>
+            <h4 className={styles["breakfast-text"]}>No value</h4>
           </div>
         )}
 
         {lunch ? (
-          <div className="meal" key={lunch.key}>
-            <h3 className="lunch-text">Lunch</h3>
-            <h4 className="lunch-text">{lunch.name}</h4>
+          <div className={styles["meal"]} key={lunch.key}>
+            <h3 className={styles["lunch-text"]}>Lunch</h3>
+            <h4 className={styles["lunch-text"]}>{lunch.name}</h4>
           </div>
         ) : (
-          <div className="meal">
-            <h3 className="lunch-text">Lunch</h3>
-            <h4 className="lunch-text">No Value</h4>
+          <div className={styles["meal"]}>
+            <h3 className={styles["lunch-text"]}>Lunch</h3>
+            <h4 className={styles["lunch-text"]}>No Value</h4>
           </div>
         )}
 
         {dinner ? (
-          <div className="meal" key={dinner.key}>
-            <h3 className="dinner-text">Dinner</h3>
-            <h4 className="dinner-text">{dinner.name}</h4>
+          <div className={styles["meal"]} key={dinner.key}>
+            <h3 className={styles["dinner-text"]}>Dinner</h3>
+            <h4 className={styles["dinner-text"]}>{dinner.name}</h4>
           </div>
         ) : (
-          <div className="meal">
-            <h3 className="dinner-text">Dinner</h3>
-            <h4 className="dinner-text">No Value</h4>
+          <div className={styles["meal"]}>
+            <h3 className={styles["dinner-text"]}>Dinner</h3>
+            <h4 className={styles["dinner-text"]}>No Value</h4>
           </div>
         )}
       </div>
-      <div className="daily-totals">
-        <p className="daily-totals-text carbs">Carbs: {totalCarbs}</p>
-        <p className="daily-totals-text protein">Protein: {totalProtein}</p>
-        <p className="daily-totals-text fat">Fat: {totalFat}</p>
-        <p className="daily-totals-text cals">Calories: {totalCals}</p>
+      <div className={styles["daily-totals"]}>
+        <p className={styles["daily-totals-text"]}>Carbs: {totalCarbs}</p>
+        <p className={styles["daily-totals-text"]}>Protein: {totalProtein}</p>
+        <p className={styles["daily-totals-text"]}>Fat: {totalFat}</p>
+        <p className={styles["daily-totals-text"]}>Calories: {totalCals}</p>
       </div>
     </div>
   );
