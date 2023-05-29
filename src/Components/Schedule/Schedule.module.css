@@ -43,3 +43,8 @@
   padding: 5px;
   height: 40%;
 }
+@media (max-width: 768px) {
+  .week-day {
+    width: auto;
+  }
+}
