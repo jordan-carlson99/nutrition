@@ -65,7 +65,6 @@ export default function UserPanel(props) {
   const handleMealPlan = () => {
     setMealPlan(!showMealPlan);
   };
-
   useEffect(() => {
     async function getGroceries() {
       let response = await fetch(`${api}/groceries/${props.user.accountname}`);
@@ -91,22 +90,22 @@ export default function UserPanel(props) {
     getGroceries();
   }, []);
   return (
-    <div id="user-panel" className="panel">
-      <div className="banner">
-        <h1 className="banner-title">Adjust Your Plan</h1>
+    <div id={styles["user-panel"]} className={styles["panel"]}>
+      <div className={styles["banner"]}>
+        <h1 className={styles["banner-title"]}>Adjust Your Plan</h1>
       </div>
       {showList ? (
-        <div id="shopping-list">
+        <div id={styles["shopping-list"]}>
           {listContent.map((item) => {
             return (
-              <li className="shopping-item" key={item.id}>
+              <li className={styles["shopping-item"]} key={item.id}>
                 {item.quantity} X {item.name}
                 <br />
               </li>
             );
           })}
           <button
-            className="user-btn"
+            className={styles["user-btn"]}
             onClick={() => {
               setList(false);
             }}
@@ -118,7 +117,7 @@ export default function UserPanel(props) {
         <form
           method="patch"
           action={`${api}/goals/${props.user.accountname}`}
-          id="goal-form"
+          id={styles["goal-form"]}
         >
           <input
             name="carbs"
@@ -141,15 +140,19 @@ export default function UserPanel(props) {
           </button>
         </form>
       ) : showRecipe ? (
-        <div id="search-container">
-          <div id="left-meal">
+        <div id={styles["search-container"]}>
+          <div id={styles["left-meal"]}>
             <div>
-              <button type="button" className="user-btn" onClick={submitMeal}>
+              <button
+                type="button"
+                className={styles["user-btn"]}
+                onClick={submitMeal}
+              >
                 Submit Meal
               </button>
               <form>
                 <input
-                  id="search-bar"
+                  id={styles["search-bar"]}
                   type="search"
                   placeholder="Search for ingredients"
                   name="name"
@@ -157,7 +160,7 @@ export default function UserPanel(props) {
                 <button
                   type="button"
                   onClick={searchIngredients}
-                  className="user-btn"
+                  className={styles["user-btn"]}
                 >
                   Search
                 </button>
@@ -179,8 +182,8 @@ export default function UserPanel(props) {
               </div>
             </div>
           </div>
-          <div id="right-meal">
-            <div id="new-meal-container">
+          <div id={styles["right-meal"]}>
+            <div id={styles["new-meal-container"]}>
               {newMeal.map((ingredient, i) => {
                 return <MealList key={i} name={ingredient} />;
               })}
@@ -190,9 +193,9 @@ export default function UserPanel(props) {
       ) : showMealPlan ? (
         <MealPlan handleMealPlan={handleMealPlan} api={api} />
       ) : (
-        <div id="button-container">
+        <div id={styles["button-container"]}>
           <button
-            className="user-btn"
+            className={styles["user-btn"]}
             onClick={() => {
               setMealPlan(true);
             }}
@@ -201,7 +204,7 @@ export default function UserPanel(props) {
             Change your meal plan
           </button>
           <button
-            className="user-btn"
+            className={styles["user-btn"]}
             onClick={() => {
               setRecipe(true);
             }}
@@ -209,7 +212,7 @@ export default function UserPanel(props) {
             Add a recipe
           </button>
           <button
-            className="user-btn"
+            className={styles["user-btn"]}
             onClick={() => {
               setGoals(true);
             }}
@@ -217,8 +220,8 @@ export default function UserPanel(props) {
             Change your goals
           </button>
           <button
-            id="bottom-btn"
-            className="user-btn"
+            id={styles["bottom-btn"]}
+            className={styles["user-btn"]}
             onClick={() => {
               setList(true);
             }}
@@ -236,9 +239,9 @@ function Result(props) {
     props.handleNewMeal(event.target.previousElementSibling.innerText, true);
   };
   return (
-    <div className="ingredient-result">
+    <div className={styles["ingredient-result"]}>
       <p>{props.name}</p>
-      <button className="add-btn" onClick={addToMeal}>
+      <button className={styles["add-btn"]} onClick={addToMeal}>
         +
       </button>
     </div>

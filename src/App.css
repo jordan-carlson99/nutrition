@@ -33,6 +33,7 @@ header {
   flex-direction: column;
   width: 70vw;
 }
+/* ---------- */
 .panel {
   display: flex;
   border-radius: 20px;
@@ -50,6 +51,7 @@ header {
   margin: 7px;
   white-space: nowrap;
 }
+/* ---- */
 #bottom-panels {
   display: flex;
 }

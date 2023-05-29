@@ -1,0 +1,95 @@
+.panel {
+  display: flex;
+  border-radius: 20px;
+  background-color: white;
+  overflow-y: scroll;
+}
+.banner {
+  background-color: #212529;
+  text-align: center;
+  color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.banner-title {
+  margin: 7px;
+  white-space: nowrap;
+}
+
+#user-panel {
+  flex-direction: column;
+  height: 20%;
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+#button-container {
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  width: 100%;
+}
+.user-btn {
+  border: 0;
+  background-color: white;
+  height: 25%;
+}
+.user-btn:hover {
+  background-color: rgb(200, 200, 200);
+}
+#bottom-btn {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+#shopping-list {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.shopping-item {
+  font-size: smaller;
+}
+#goal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#goal-form input {
+  width: 50%;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+#goal-form button {
+  padding: 1%;
+  border: none;
+  background-color: white;
+  width: 50%;
+}
+#goal-form button:hover {
+  background-color: rgb(200, 200, 200);
+}
+.ingredient-result {
+  display: flex;
+  flex-direction: row;
+}
+#search-container {
+  display: flex;
+}
+#left-meal {
+  width: 60%;
+}
+#search-bar {
+  width: 80%;
+}
+.ingredient-result {
+  display: flex;
+  justify-content: space-around;
+}
+.ingredient-result button {
+  padding: 10%;
+  background-color: white;
+  border: none;
+}
+.ingredient-result button:hover {
+  background-color: rgb(200, 200, 200);
+}
