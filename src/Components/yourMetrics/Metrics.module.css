@@ -1,0 +1,36 @@
+.panel {
+  display: flex;
+  border-radius: 20px;
+  background-color: white;
+  overflow-y: scroll;
+}
+.banner {
+  background-color: #212529;
+  text-align: center;
+  color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.banner-title {
+  margin: 7px;
+  white-space: nowrap;
+}
+#metric-panel {
+  flex-direction: column;
+  height: 60%;
+  margin: 5%;
+}
+#top-metrics {
+  display: flex;
+  flex-direction: row;
+  height: 40%;
+}
+#bottom-metrics {
+  height: 45%;
+}
+.chart-box-top {
+  width: 100%;
+}
+.chart-box-bottom {
+  height: 100%;
+}

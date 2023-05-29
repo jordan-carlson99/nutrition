@@ -48,31 +48,6 @@ export default function Metrics(props) {
       },
     };
   };
-
-  //   labels: ["daily"],
-  //   datasets: [
-  //     {
-  //       label: "Carbs",
-  //       data: [props.macros.carbs.supplement / 7],
-  //       backgroundColor: "rgba(219, 188, 48, 0.75)",
-  //     },
-  //     {
-  //       label: "Protein",
-  //       data: [props.macros.protein.supplement / 7],
-  //       backgroundColor: ["rgba(230, 53, 150, 0.75)"],
-  //     },
-  //     {
-  //       label: "Fat",
-  //       data: [props.macros.fat.supplement / 7],
-  //       backgroundColor: ["rgba(222, 148, 64, 0.75)"],
-  //     },
-  //     {
-  //       label: "Calories",
-  //       data: [props.macros.cals.supplement / 7],
-  //       backgroundColor: "rgba(201, 44, 63, 0.75)",
-  //     },
-  //   ],
-  // });
   const [diversityGraphData, setDiversityGraphData] = useState({
     labels: ["Carbs", "Proteins", "Fats"],
     datasets: [
@@ -139,20 +114,20 @@ export default function Metrics(props) {
   }, []);
 
   return (
-    <div className="panel" id="metric-panel">
-      <div className="banner">
-        <h1 className="banner-title">Your metrics</h1>
+    <div className={styles["panel"]} id={styles["metric-panel"]}>
+      <div className={styles["banner"]}>
+        <h1 className={styles["banner-title"]}>Your metrics</h1>
       </div>
-      <div id="top-metrics">
-        <div className="chart-box-top">
+      <div id={styles["top-metrics"]}>
+        <div className={styles["chart-box-top"]}>
           <PolarArea
             options={options("Caloric Sources")}
             data={polarGraphData}
           ></PolarArea>
         </div>
       </div>
-      <div id="bottom-metrics">
-        <div className="chart-box-bottom">
+      <div id={styles["bottom-metrics"]}>
+        <div className={styles["chart-box-bottom"]}>
           <Pie
             options={options("Macronutrient Ratios")}
             data={diversityGraphData}
