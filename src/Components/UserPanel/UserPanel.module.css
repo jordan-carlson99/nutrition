@@ -93,3 +93,21 @@
 .ingredient-result button:hover {
   background-color: rgb(200, 200, 200);
 }
+.meal-macros {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.meal-edit-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#meal-plan {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+#meal-plan-close {
+  justify-self: center;
+}

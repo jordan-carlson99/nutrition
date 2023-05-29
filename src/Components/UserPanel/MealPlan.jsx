@@ -13,15 +13,15 @@ export default function ChangeMealPlan(props) {
     getMeals();
   }, []);
   return (
-    <div key={`mealchange-1`}>
+    <div key={`mealchange-1`} id={styles["meal-plan"]}>
       {meals &&
         meals.map((meal) => {
           return <Meal meal={meal} />;
         })}
       <button
+        id={styles["meal-plan-close"]}
         onClick={() => {
           props.handleMealPlan();
-          console.log(meals);
         }}
       >
         Close
@@ -32,11 +32,14 @@ export default function ChangeMealPlan(props) {
 
 function Meal(props) {
   return (
-    <div key={`mealplanchange-${props.meal.id}`}>
+    <div
+      key={`mealplanchange-${props.meal.id}`}
+      className={styles["meal-edit-card"]}
+    >
       <h3>{props.meal.name}</h3>
       <button>Add/Remove from plan</button>
       <button>Edit Meal</button>
-      <div>
+      <div className={styles["meal-macros"]}>
         <p>{`cals: ${props.meal.meal_calories}`}</p>
         <p>{`carbs: ${props.meal.meal_carbs}`}</p>
         <p>{`fat: ${props.meal.meal_fat}`}</p>
