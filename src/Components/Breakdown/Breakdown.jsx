@@ -27,7 +27,6 @@ if (import.meta.env.VITE_apiPort) {
 } else {
   api = `${import.meta.env.VITE_apiURL}` || "http://localhost:3500/";
 }
-
 export default function Breakdown(props) {
   const options = (title) => {
     return {
@@ -116,43 +115,40 @@ export default function Breakdown(props) {
     });
   }, [macroBreakdown, props.handleMacros, props.goalsUpdate]);
   return (
-    <div className="panel" id="breakdown">
-      <div className="breakdown-categories first">
-        <div className="breakdown-banner first">
-          <h1 className="banner-title">Weekly Totals</h1>
+    <div className={styles["panel"]} id={styles["breakdown"]}>
+      <div className={`${styles["breakdown-categories"]} ${styles["first"]}`}>
+        <div className={`${styles["breakdown-banner"]} ${styles["first"]}`}>
+          <h1 className={styles["banner-title"]}>Weekly Totals</h1>
         </div>
-        <p className="carbs">Carbs: {macroBreakdown.carbs.weeklyTotals}</p>
-        <p className="protein">
-          {" "}
-          Protein: {macroBreakdown.protein.weeklyTotals}
-        </p>
-        <p className="fat">Fat: {macroBreakdown.fat.weeklyTotals}</p>
-        <p className="cals">Cals: {macroBreakdown.cals.weeklyTotals}</p>
+        <p>Carbs: {macroBreakdown.carbs.weeklyTotals}</p>
+        <p>Protein: {macroBreakdown.protein.weeklyTotals}</p>
+        <p>Fat: {macroBreakdown.fat.weeklyTotals}</p>
+        <p>Cals: {macroBreakdown.cals.weeklyTotals}</p>
       </div>
-      <div className="breakdown-categories">
-        <div className="breakdown-banner">
-          <h1 className="banner-title">Goals</h1>
+      <div className={styles["breakdown-categories"]}>
+        <div className={styles["breakdown-banner"]}>
+          <h1 className={styles["banner-title"]}>Goals</h1>
         </div>
-        <p className="carbs">{macroBreakdown.carbs.goals}</p>
-        <p className="protein">{macroBreakdown.protein.goals}</p>
-        <p className="fat">{macroBreakdown.fat.goals}</p>
-        <p className="cals">{macroBreakdown.cals.goals}</p>
+        <p>{macroBreakdown.carbs.goals}</p>
+        <p>{macroBreakdown.protein.goals}</p>
+        <p>{macroBreakdown.fat.goals}</p>
+        <p>{macroBreakdown.cals.goals}</p>
       </div>
-      <div className="breakdown-categories ">
-        <div className="breakdown-banner ">
-          <h1 className="banner-title">Supplement</h1>
+      <div className={styles["breakdown-categories"]}>
+        <div className={styles["breakdown-banner"]}>
+          <h1 className={styles["banner-title"]}>Supplement</h1>
         </div>
-        <p className="carbs">{macroBreakdown.carbs.supplement}</p>
-        <p className="protein">{macroBreakdown.protein.supplement}</p>
-        <p className="fat">{macroBreakdown.fat.supplement}</p>
-        <p className="cals">{macroBreakdown.cals.supplement}</p>
+        <p>{macroBreakdown.carbs.supplement}</p>
+        <p>{macroBreakdown.protein.supplement}</p>
+        <p>{macroBreakdown.fat.supplement}</p>
+        <p>{macroBreakdown.cals.supplement}</p>
       </div>
-      <div className="breakdown-categories last">
-        <div className="breakdown-banner last">
-          <h1 className="banner-title"> Chart</h1>
+      <div className={`${styles["breakdown-categories"]} ${styles["last"]}`}>
+        <div className={`${styles["breakdown-banner"]} ${styles["last"]}`}>
+          <h1 className={styles["banner-title"]}> Chart</h1>
         </div>
         {supplementGraphData && (
-          <div className="chart-box-bottom">
+          <div className={styles["chart-box-bottom"]}>
             <Bar
               data={supplementGraphData}
               options={options("Daily Supplementation")}
