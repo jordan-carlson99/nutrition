@@ -25,69 +25,94 @@ app.get("/", (req, res) => {
 
 // get user info
 app.get("/user/:accountname", (req, res) => {
-  client
-    .query(`SELECT * FROM account WHERE accountname=$1`, [
-      req.params.accountname,
-    ])
-    .then((result) => {
-      res.send(result.rows);
-      //   console.log("s");
-    });
+  try {
+    client
+      .query(`SELECT * FROM account WHERE accountname=$1`, [
+        req.params.accountname,
+      ])
+      .then((result) => {
+        res.send(result.rows);
+        //   console.log("s");
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("something went wrong");
+  }
 });
 
 // get all data for account
 app.get("/all/:accountname", (req, res) => {
-  client
-    .query(
-      `SELECT account.accountname, account.carb_goal, account.protein_goal, account.fat_goal, account.cal_goal,
+  try {
+    client
+      .query(
+        `SELECT account.accountname, account.carb_goal, account.protein_goal, account.fat_goal, account.cal_goal,
       meal_schedule.meal_number, meal_schedule.meal_day,
       meal.*
       FROM account
       JOIN meal_schedule ON meal_schedule.account_id=account.id
       JOIN meal ON meal.id=meal_schedule.meal_id
       WHERE account.accountname=$1;`,
-      [req.params.accountname]
-    )
-    .then((result) => {
-      res.send(result.rows);
-    });
+        [req.params.accountname]
+      )
+      .then((result) => {
+        res.send(result.rows);
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("something went wrong");
+  }
 });
 
 // get meals associated to accounts via meal_schedule
 app.get("/meals/:accountname", (req, res) => {
-  client
-    .query(
-      `SELECT account.accountname,
+  try {
+    client
+      .query(
+        `SELECT account.accountname,
       meal_schedule.meal_day, meal_schedule.meal_number,
       meal.*
       FROM account
       JOIN meal_schedule ON meal_schedule.account_id=account.id
       JOIN meal ON meal.id=meal_schedule.meal_id
       WHERE account.accountname=$1;`,
-      [req.params.accountname]
-    )
-    .then((result) => {
-      res.send(result.rows);
-    });
+        [req.params.accountname]
+      )
+      .then((result) => {
+        res.send(result.rows);
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("something went wrong");
+  }
 });
 
 // get all meals
 app.get("/meals", (req, res) => {
-  client.query(`SELECT * FROM meal;`).then((result) => {
-    res.send(result.rows);
-  });
+  try {
+    client.query(`SELECT * FROM meal;`).then((result) => {
+      res.send(result.rows);
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("something went wrong");
+  }
 });
 
 // get user's goals
 app.get("/goals/:accountname", (req, res) => {
-  client
-    .query(
-      `SELECT carb_goal, protein_goal, fat_goal, cal_goal FROM account WHERE accountname=$1;`,
-      [req.params.accountname]
-    )
-    .then((result) => {
-      res.send(result.rows);
-    });
+  try {
+    client
+      .query(
+        `SELECT carb_goal, protein_goal, fat_goal, cal_goal FROM account WHERE accountname=$1;`,
+        [req.params.accountname]
+      )
+      .then((result) => {
+        res.send(result.rows);
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("something went wrong");
+  }
 });
 
 // get groceries
@@ -152,20 +177,25 @@ app.put("/meals", (req, res) => {
 
 // put a new ingredient
 app.put("/ingredient", (req, res) => {
-  req.body = validateBody(req.body);
-  client
-    .query(
-      `INSERT INTO ingredient (name, ingredient_carbs, ingredient_protein, ingredient_fat, ingredient_calories) 
+  try {
+    req.body = validateBody(req.body);
+    client
+      .query(
+        `INSERT INTO ingredient (name, ingredient_carbs, ingredient_protein, ingredient_fat, ingredient_calories) 
     VALUES ($1,$2,$3,$4,$5);`,
-      [
-        req.body.name,
-        req.body.carbs,
-        req.body.protein,
-        req.body.fat,
-        req.body.cals,
-      ]
-    )
-    .then(res.send("success"));
+        [
+          req.body.name,
+          req.body.carbs,
+          req.body.protein,
+          req.body.fat,
+          req.body.cals,
+        ]
+      )
+      .then(res.send("success"));
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("something went wrong");
+  }
 });
 
 // add user
